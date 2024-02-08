@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 
 const app = express();
-const mainRouter = require('../Backend/mainRoutes');
+const mainRouter = require('./mainRouter');
 
 app.use(express.json());
 app.use(cors());
