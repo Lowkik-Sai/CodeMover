@@ -11,11 +11,11 @@ require('dotenv').config();
 
 app.use("/", mainRouter);
 
-app.get("/test", (req, res) => {
+app.get("/", (req, res) => {
     res.status(200).json({message: "Hello World from Code-Mover"});
 })
 
 const port = process.env.SERVER_PORT || 5000;
 app.listen(port, (req, res) => {
-    console.log(`Server is Listening on Port ${port}...`);
+    console.log(`Server is Listening on Port http://localhost:${port}...`);
 })
