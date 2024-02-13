@@ -11,7 +11,7 @@ require('dotenv').config();
 
 app.use("/", mainRouter);
 
-app.get("/", (req, res) => {
+app.get("/test", (req, res) => {
     res.status(200).json({message: "Hello World from Code-Mover"});
 })
 
