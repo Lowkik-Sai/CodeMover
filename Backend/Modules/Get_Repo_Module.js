@@ -11,7 +11,6 @@ const Get_Repo_Module =  {
                 }
             });
             const repo_names = api_response.data.map(obj => obj.name);
-            console.log(repo_names);
             responseBody = repo_names;
         } catch (error) {
             console.log(error);
