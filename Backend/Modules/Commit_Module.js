@@ -16,14 +16,13 @@ const commitCodeModule = {
 
             const { data: { sha } } = await octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
                 owner,
-                repo,
-                path
+                repo
             });
 
             await octokit.request('PUT /repos/{owner}/{repo}/contents/{path}', {
                 owner,
                 repo,
-                path: path,
+                path,
                 message: commitMessage,
                 content: fileContent,
                 committer: {
@@ -37,7 +36,7 @@ const commitCodeModule = {
         } catch (error) {
             console.log(error);
             responseCode = 404;
-            responseMessage = "Error";
+            responseMessage = error;
         }
 
         const status = {
