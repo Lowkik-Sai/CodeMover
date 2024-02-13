@@ -3,18 +3,16 @@ let responseCode = 200;
 let responseBody = "";
 
 const Get_Repo_Module =  {
-    Get_Repo : async(User_Name) => {
+    Get_Repo : async(User_Name, Access_Token) => {
         try {
-            const api_response = await axios.get(`https://api.github.com/users/${User_Name}/repos`);
-            console.log(api_response);
-            if(api_response.status == 200){
-                const responseBody = api_response.data;
-            }
-            else{
-                console.log("Error in fetching Repositories", api_response.statusText);
-                responseCode = 100;
-                responseBody = api_response.statusText;
-            }
+            const api_response = await axios.get(`https://api.github.com/users/${User_Name}/repos`, {
+                headers: {
+                    Authorization: `Bearer ${Access_Token}`
+                }
+            });
+            const repo_names = api_response.data.map(obj => obj.name);
+            console.log(repo_names);
+            responseBody = repo_names;
         } catch (error) {
             console.log(error);
             responseCode = 100;
