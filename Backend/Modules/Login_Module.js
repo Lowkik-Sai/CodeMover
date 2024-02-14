@@ -1,57 +1,60 @@
 const AWS = require('aws-sdk');
+const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
-AWS.config.update({region: process.env.AWS_REGION});
+AWS.config.update({ region: process.env.AWS_REGION });
 
-var ddb = new AWS.DynamoDB({ apiVersion: "2012-08-10" });
+const ddb = new AWS.DynamoDB({ apiVersion: "2012-08-10" });
 
-let responseCode = 200;
-let responseBody = "";
-let JWT_TOKEN = "";
+const Login = async (User_Name, Password) => {
+    const response = {
+        responseCode: 200,
+        responseBody: "",
+        JWT_TOKEN: ""
+    };
 
-const Login = async(User_Name) => {
-    var params = {
+    const params = {
         Key: {
-            "User_Name": {
-                "S": User_Name
-            }
+            "User_Name": { "S": User_Name }
         },
         TableName: "Auth"
     };
 
-    let DB_User_Name = "";
-    ddb.getItem(params, (err, data) => {
-        if(err){
-            console.log(err);
-            responseCode = 100;
-            responseBody = err;
+    try {
+        const data = await ddb.getItem(params).promise();
+        if (!data.Item) {
+            response.responseCode = 404;
+            response.responseBody = "User Not Found";
+            return response;
         }
-        else{
-            console.log(data);
-            DB_User_Name = data.Item.User_Name.S;
-        }
-    });
 
-    if(DB_User_Name == null){
-        responseCode = 404;
-        responseBody = "User Not Found In Given User Name";
-    }
-    else{
-        const token = jwt.sign({ User_Name: User_Name}, "my-32-character-ultra-secure-and-ultra-long-secret", {
+        const DB_Password = data.Item.Password.S;
+        const hashedPassword = crypto.createHash('sha256').update(Password).digest('hex');
+        console.log(DB_Password, hashedPassword);
+        let isValid = true;
+        
+        if(DB_Password !== hashedPassword) isValid = false;
+
+        if (!isValid) {
+            response.responseCode = 401;
+            response.responseBody = "Incorrect Password";
+            return response;
+        }
+
+        const token = jwt.sign({ User_Name: User_Name }, "my-32-character-ultra-secure-and-ultra-long-secret", {
             expiresIn: '1h',
         });
-        JWT_TOKEN = token;
-        responseBody = "Successfully Logged In";
+        response.JWT_TOKEN = token;
+        response.responseBody = "Successfully Logged In"; 
+
+    } catch (error) {
+        console.error("Error:", error);
+        response.responseCode = 500;
+        response.responseBody = "Internal Server Error";
     }
 
-    const response = {
-        responseCode,
-        responseBody,
-        JWT_TOKEN
-    };
-
     return response;
-}
+};
 
 module.exports = Login;
