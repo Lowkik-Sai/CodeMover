@@ -2,11 +2,12 @@ const {Octokit} = require("@octokit/core")
 require("dotenv").config()
 
 
+
 let responseCode = 200;
 let responseBody = "";
 
 const Get_Repo_Module =  {
-    getRepo : async(Access_Token)=>{
+    getRepo : async()=>{
         try{
 
             const octokit = new Octokit({
@@ -16,9 +17,9 @@ const Get_Repo_Module =  {
             const api_response = await octokit.request('GET /user/repos',{
                 headers: {
                     'X-GitHub-Api-Version': '2022-11-28'
-                    
                 }
             })
+            console.log(api_response)
             const repo_names = api_response.data.map(obj => obj.name);
             responseBody = repo_names;
 
