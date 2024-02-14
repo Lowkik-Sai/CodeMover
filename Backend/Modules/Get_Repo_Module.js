@@ -1,18 +1,18 @@
 const {Octokit} = require("@octokit/core")
 require("dotenv").config()
 
-const octokit = new Octokit({
-    auth: process.env.gitToken
-})
 
-
-const axios = require('axios');
 let responseCode = 200;
 let responseBody = "";
 
 const Get_Repo_Module =  {
-    getRepo : async(userName)=>{
+    getRepo : async(Access_Token)=>{
         try{
+
+            const octokit = new Octokit({
+                auth: Access_Token
+            })
+
             const api_response = await octokit.request('GET /user/repos',{
                 headers: {
                     'X-GitHub-Api-Version': '2022-11-28'

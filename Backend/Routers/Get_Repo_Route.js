@@ -3,7 +3,7 @@ const express = require('express');
 
 const router = express.Router();
 
-router.get("/getrepos/:User_Name", (req, res) => {
+router.get("/getrepos", (req, res) => {
     Get_Repo_Controller(req, res);
 });
 
