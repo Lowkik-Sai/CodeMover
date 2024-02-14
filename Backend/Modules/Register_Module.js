@@ -14,6 +14,8 @@ let response = {
 };
 
 const Register_Module = async(User_Name, Password, Access_Token) => {
+
+    // Check whether given github access token is valid
     try {
         const access_token_response = await axios.get('https://api.github.com/user', {
             headers: {
@@ -28,6 +30,7 @@ const Register_Module = async(User_Name, Password, Access_Token) => {
         return response;
     }
 
+    // Check whether given Github User_Name is Valid
     const Validate_User_response = await Validate_UserName(User_Name);
     if(!Validate_User_response){
         response.responseCode = 404;
@@ -35,9 +38,36 @@ const Register_Module = async(User_Name, Password, Access_Token) => {
         return response;
     }
 
+    // Check if already a User exists with given User_Name
+    var params = {
+        Key: {
+            "User_Name": {
+                "S": User_Name
+            }
+        },
+        TableName: "Auth"
+    };
+
+    ddb.getItem(params, (err, data) => {
+        if(err){
+            console.log(err);
+            response.responseCode = 404;
+            response.responseBody = "Error in Reading Database";
+            return response;
+        }
+
+        if(data.Item.User_Name.S === User_Name){
+            response.responseCode = 420;
+            response.responseBody = "Already User Exists with Given User Name";
+            return response;
+        }
+    })
+
+
+    // Insert User Details to DynamoDB
     const hashedPassword = crypto.createHash('sha256').update(Password).digest('hex');
 
-    var params = {
+    params = {
         TableName: "Auth",
         Item: {
             User_Name: { S: User_Name },
