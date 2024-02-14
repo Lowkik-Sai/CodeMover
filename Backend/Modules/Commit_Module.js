@@ -11,7 +11,6 @@ let responseMessage = "Undefined";
 const commitCodeModule = {
     commitCode: async (owner, ownerMail, repo, path, commitMessage, content) => {
         try {
-            console.log(`Path in module : ${path}`);
             const fileContent = Buffer.from(content).toString('base64');
 
             const { data: { sha } } = await octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {

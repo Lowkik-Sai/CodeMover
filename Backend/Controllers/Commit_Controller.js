@@ -1,6 +1,7 @@
 const commitCodeModule = require("../Modules/Commit_Module");
 
 const commitController = async (req,res) => {
+    
     //req = owner, ownerMail, repo, path, commitMessage, content
     const owner = req.params.owner;
     const repo = req.params.repo;
@@ -10,7 +11,7 @@ const commitController = async (req,res) => {
     const commitMessage = req.body.commitMessage;
     const ownerMail = req.body.ownerMail;
     const content = req.body.content;
-    console.log(`Path : ${codePath}`)
+
     const getCommitModule = await commitCodeModule.commitCode(owner, ownerMail, repo, codePath, commitMessage, content);
     res.status(getCommitModule.responseCode).json(getCommitModule.responseMessage)
 
