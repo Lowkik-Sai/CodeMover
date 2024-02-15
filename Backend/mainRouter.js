@@ -9,7 +9,7 @@ const commit = require('./Routers/Commit_Route');
 
 //Middlewares
 const webTokenValidator = require('./Middleware/webTokenValidator');
-const rateLimitCheck = require('./Middleware/rateLimit')
+const rateLimitCheck = require('./Middleware/rateLimit');
 
 router.use("/", rateLimitCheck, Get_Repo);
 router.use("/restricted", webTokenValidator, Get_Access_Token);

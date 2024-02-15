@@ -1,8 +1,6 @@
 const {Octokit} = require("@octokit/core")
 require("dotenv").config()
 
-
-
 let responseCode = 200;
 let responseBody = "";
 
