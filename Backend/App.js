@@ -1,6 +1,5 @@
 const express = require('express');
 const cors = require('cors');
-
 const app = express();
 const mainRouter = require('./mainRouter');
 
@@ -8,8 +7,7 @@ app.use(express.json());
 app.use(cors());
 require('dotenv').config();
 
-
-app.use("/", mainRouter);
+app.use("/",mainRouter);
 
 app.get("/test", (req, res) => {
     res.status(200).json({message: "Hello World from Code-Mover"});
