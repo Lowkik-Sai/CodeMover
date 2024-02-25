@@ -6,20 +6,37 @@ function sendDataToBackend(data) {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({"answersReceived":data}),
+        body: JSON.stringify({ "answersReceived": data }),
     })
     .then(response => {
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
+        return response.json();
     })
-    .then(data => {
-        console.log('Data sent to backend:', data);
+    .then(responseData => {
+        console.log('Data sent to backend:', responseData);
         // Handle response from backend if needed
     })
     .catch(error => {
         console.error('Error sending data to backend:', error);
     });
+}
+
+function pasteIntoInput(el, text) {
+    el.focus();
+    if (typeof el.selectionStart == "number"
+            && typeof el.selectionEnd == "number") {
+        var val = el.value;
+        var selStart = el.selectionStart;
+        el.value = val.slice(0, selStart) + text + val.slice(el.selectionEnd);
+        el.selectionEnd = el.selectionStart = selStart + text.length;
+    } else if (typeof document.selection != "undefined") {
+        var textRange = document.selection.createRange();
+        textRange.text = text;
+        textRange.collapse(false);
+        textRange.select();
+    }
 }
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -30,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function() {
         "Q3"
     ];
 
-    let answersReceived=[];
+    let answersReceived = [];
     let countOfAns = 0;
 
     const inputEl = document.querySelector(".input-chat");
@@ -42,39 +59,38 @@ document.addEventListener("DOMContentLoaded", function() {
     async function functionName(robot) {
         robot = robot.querySelector(".robot");
         robot.textContent = globalQuestions[countOfQns];
-        countOfQns+=1;
-        
+        countOfQns += 1;
     }
-
 
     function manageChat() {
         userMessage = inputEl.value.trim();
-        if (!userMessage) return;
-        countOfAns+=1;
-        answersReceived.push(userMessage);
-        inputEl.value = "";
-
-        if(countOfAns==3){
-            console.log("Questions Finished")
-            sendDataToBackend(answersReceived);
+        if (!userMessage && !countOfAns) return;
+        if (countOfAns) {
+            countOfAns += 1;
+            answersReceived.push(userMessage);
+            inputEl.value = "";
+            if (countOfAns == 3) {
+                console.log("Questions Finished")
+                sendDataToBackend(answersReceived);
+                countOfAns = 0;
+                answersReceived = [];
+            }
         }
-    
+
         // Append user message
         cardbodyEl.appendChild(messageEl(userMessage, "user"));
-    
+
         // Scroll to the bottom of the chat body after user message
         cardbodyEl.scrollTop = cardbodyEl.scrollHeight;
-    
+
         // Simulate robot response
         setTimeout(() => {
             const robotMessage = messageEl("Thinking...", "chat-bot");
             cardbodyEl.append(robotMessage);
             functionName(robotMessage);
-    
+
             // Scroll to the bottom of the chat body after robot message
             cardbodyEl.scrollTop = cardbodyEl.scrollHeight;
-
-            
         }, 300);
     }
 
@@ -94,17 +110,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
     btnEl.addEventListener("click", manageChat);
 
-    inputEl.addEventListener("input", (e) => {
-        e.preventDefault();
-        e.target.addEventListener("keydown", (keyboard) => {
-            if (keyboard.key === "Enter") {
-                manageChat();
-            }
-        })
+    inputEl.addEventListener("keydown", (evt) => {
+        if (evt.keyCode == 13 && !evt.shiftKey) {
+            evt.preventDefault();
+            manageChat();
+        }
     });
 
     // Focus at the start of the textarea
     inputEl.setSelectionRange(0, 0);
-
 });
-
