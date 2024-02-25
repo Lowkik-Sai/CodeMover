@@ -38,6 +38,7 @@ body {
     left: 10px;
     bottom: 0;
     width: 200px;
+    height: 550px;
     background-color: green;
 }
 .main {
@@ -47,7 +48,7 @@ body {
     width: calc(100% - 210px); /* Adjusted for sidebar width and right margin */
     background-color: #c9d6ff;
     padding: 10px;
-    height: 100%; /* Full height minus navbar height */
+    height: 550px; /* Full height minus navbar height */
     background: linear-gradient(to right,#e2e2e2,#c9d6ff);
     
 }
@@ -147,7 +148,6 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    position: relative; /* Add this to make the absolute positioning relative to this container */
 }
 
 .card-footer textarea{
@@ -157,24 +157,24 @@ body {
     font-family: inherit;
     width: 100%; /* Adjusted to accommodate the icon */
     display: flex;
-    padding: 1.5rem;
+    padding: 1rem;
     background-color: #212f3d;
     border-radius: 10px;
     color: white;
     font-size: 1rem;
 }
 
+
 .sending-icon{
-    /* Remove position: absolute; */
-    /* Remove right: 30px; */
+    position: absolute;
+    right: 30px;
     display: flex; /* Add this to align the icon properly */
     align-items: center; /* Add this to vertically center the icon */
     margin-right: 10px; /* Adjust as needed */
 }
 
 .sending-icon .fa-paper-plane{
-    color: black;
-    background-color: white;
+    color: white;
     font-size: 1.5rem;
     cursor: pointer;
 }
