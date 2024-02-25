@@ -1,6 +1,38 @@
 "use strict";
 
+function sendDataToBackend(data) {
+    fetch('http://localhost:8080/api/getAnswers', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({"answersReceived":data}),
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+    })
+    .then(data => {
+        console.log('Data sent to backend:', data);
+        // Handle response from backend if needed
+    })
+    .catch(error => {
+        console.error('Error sending data to backend:', error);
+    });
+}
+
 document.addEventListener("DOMContentLoaded", function() {
+    let countOfQns = 0;
+    const globalQuestions = [
+        "Q1",
+        "Q2",
+        "Q3"
+    ];
+
+    let answersReceived=[];
+    let countOfAns = 0;
+
     const inputEl = document.querySelector(".input-chat");
     const btnEl = document.querySelector(".fa-regular.fa-paper-plane");
     const cardbodyEl = document.querySelector(".card-body");
@@ -9,13 +41,23 @@ document.addEventListener("DOMContentLoaded", function() {
 
     async function functionName(robot) {
         robot = robot.querySelector(".robot");
-        //robot.textContent = messages from stack
+        robot.textContent = globalQuestions[countOfQns];
+        countOfQns+=1;
+        
     }
+
 
     function manageChat() {
         userMessage = inputEl.value.trim();
         if (!userMessage) return;
+        countOfAns+=1;
+        answersReceived.push(userMessage);
         inputEl.value = "";
+
+        if(countOfAns==3){
+            console.log("Questions Finished")
+            sendDataToBackend(answersReceived);
+        }
     
         // Append user message
         cardbodyEl.appendChild(messageEl(userMessage, "user"));
@@ -33,7 +75,7 @@ document.addEventListener("DOMContentLoaded", function() {
             cardbodyEl.scrollTop = cardbodyEl.scrollHeight;
 
             
-        }, 200);
+        }, 300);
     }
 
     const messageEl = (message, className) => {
