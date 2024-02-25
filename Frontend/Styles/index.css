@@ -7,7 +7,7 @@
 }
 
 body {
-    color: #fff;
+    background-image: url('../Images/pexels-photo-5087702.jpeg');
     margin: 0;
     padding-top: 5px; /* Adjusted for fixed navbar */
 }
@@ -15,14 +15,18 @@ body {
 
 .navbar-container {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
+    top: 25px;
+    left: 22%;
+    right: 20%;
+    display: flex;
     z-index: 1000; /* Ensure navbar is above other content */
     border-radius: 5px;
+    justify-content: center;
+    align-items: center;
+    font-size: x-large;
     padding: 15px;
     margin: 10px;
-    background-color: lightblue;
+    background-color: #B4D4FF;
     height: 60px;
 }
 
@@ -32,24 +36,39 @@ body {
 }
 
 .leftbar {
-    border-radius: 5px;
+    border-radius: 20px 0px 0px 20px;
     position: fixed;
     top: 110px; /* Adjusted for fixed navbar */
-    left: 10px;
+    left: 22%;
     bottom: 0;
     width: 200px;
     height: 550px;
-    background-color: green;
+    background: #212f3d;
 }
+
+.profile {
+    background-color: black;
+    margin-top: 30px;
+    height: 60px;
+    width: 200px;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    font-size: larger;
+    padding-top: 30px;
+    color: white;
+    padding-left: 30px;
+}
+
 .main {
-    border-radius: 5px 10px 5px 10px;
-    margin-left: 220px; /* Adjusted for fixed sidebar width */
-    margin-right: 10px; /* Right margin of 10px */
+    position: relative;
+    border-radius: 0px 20px 20px 0px;
+    margin-left: 35%; /* Adjusted for fixed sidebar width */
+    margin-right: 20%; /* Right margin of 10px */
     width: calc(100% - 210px); /* Adjusted for sidebar width and right margin */
-    background-color: #c9d6ff;
+    background-color: #C4DFDF;
     padding: 10px;
     height: 550px; /* Full height minus navbar height */
-    background: linear-gradient(to right,#e2e2e2,#c9d6ff);
     
 }
 
@@ -106,7 +125,7 @@ body {
 }
 
 .card-body .chat-bot p{
-    background-color: #3498db;
+    background: linear-gradient(135deg, #9DB2BF, #40A2D8);
     border-radius: 10px;
     padding: 0.8rem;
     width: 50%;
@@ -114,7 +133,7 @@ body {
 }
 
 .card-body .user p{
-    background-color: #28b463;
+    background: linear-gradient(135deg ,#40A2D8, #4F709C);
     border-radius: 10px;
     padding: 0.8rem;
     width: 50%;
@@ -147,6 +166,7 @@ body {
 .card-footer{
     display: flex;
     align-items: center;
+    padding-top: 15px;
     justify-content: space-between;
 }
 
@@ -166,11 +186,10 @@ body {
 
 
 .sending-icon{
-    position: absolute;
-    right: 30px;
+    right: 5px;
     display: flex; /* Add this to align the icon properly */
     align-items: center; /* Add this to vertically center the icon */
-    margin-right: 10px; /* Adjust as needed */
+    margin-right: 5px; /* Adjust as needed */
 }
 
 .sending-icon .fa-paper-plane{

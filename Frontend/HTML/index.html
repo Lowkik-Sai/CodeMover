@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script type="text/javascript" src="../JavaScript/index.js"></script>
 </head>
-<body>
+<body id="1">
     <div class="navbar-container">
         <div class="navbar">
             <h3>
@@ -20,7 +20,9 @@
     
     <div class="container">
         <div class="leftbar">
-            <p>SideBar</p>
+            <div class="profile">
+                UserName
+            </div>
         </div>
 
         <div class="main">
@@ -41,7 +43,7 @@
                     </div>
                     <div class="card-footer">
                         <textarea name="message" class="input-chat" cols="1" rows="1" placeholder="Ask me!" autofocus></textarea>
-                        <div class="sending-icon">
+                        <div class="sending-icon" style="border-radius: 40px; background-color: #0766AD; width: 60px ;height: 60px; align-items: center; justify-content: center; margin-right: 0px; margin-left: 5px;">
                             <i class="fa-regular fa-paper-plane"></i>
                         </div>
                     </div>
@@ -49,5 +51,46 @@
             </div>
         </div>
     </div>
+
+<script src="three.r134.min.js"></script>
+<script src="vanta.net.min.js"></script>
+<script>
+VANTA.NET({
+  el: "#your-element-selector",
+  mouseControls: true,
+  touchControls: true,
+  gyroControls: false,
+  minHeight: 200.00,
+  minWidth: 200.00,
+  scale: 1.00,
+  scaleMobile: 1.00,
+  color: 0x3fbbff,
+  backgroundColor: 0x0
+})
+</script>
+They're initializing Vanta.js after including the script files three.r134.min.js and vanta.net.min.js, and they're targeting an element with the selector #your-element-selector as the el parameter.
+
+If you want to follow the example code on the Vanta.js website, you can add an HTML element with an id (e.g., <div id="vanta-element"></div>) and target that element in the el parameter:
+
+html
+Copy code
+<div id="vanta-element"></div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    VANTA.NET({
+        el: document.getElementById(1),
+        mouseControls: true,
+        touchControls: true,
+        gyroControls: false,
+        minHeight: 200.00,
+        minWidth: 200.00,
+        scale: 1.00,
+        scaleMobile: 1.00,
+        color: 0x3fbbff,
+        backgroundColor: 0x0
+    });
+});
+</script>
 </body>
 </html>
