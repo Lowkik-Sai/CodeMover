@@ -1,6 +1,7 @@
 
-function getRepos() {
-    fetch('http://localhost:8080/getrepos', {
+async function getRepos() {
+    
+    await fetch('http://localhost:8080/getrepos', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',

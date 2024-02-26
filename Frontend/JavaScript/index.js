@@ -27,9 +27,10 @@ function sendDataToBackend(data) {
 }
 
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", async function() {
     let countOfQns = 0;
-    const globalQuestions = Questions;
+    const globalQuestions = await Questions();
+    console.log("Questions :"+Questions())
 
     let answersReceived = [];
     let countOfAns = 0;
