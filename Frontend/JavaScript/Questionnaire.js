@@ -12,4 +12,4 @@ const Questions = [
     "Please Enter 'confirm' if you're Ready to Proceed with the Commit"
 ]
 
-module.exports = Questions;
+export { Questions };
