@@ -2,6 +2,7 @@
 
 import { Questions } from "./Questionnaire.js";
 
+
 function sendDataToBackend(data) {
     fetch('http://localhost:8080/api/getAnswers', {
         method: 'POST',

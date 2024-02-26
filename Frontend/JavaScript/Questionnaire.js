@@ -1,3 +1,5 @@
+import { getRepos } from "./displayRepos";
+
 const Questions = [
     "Welcome to Code-Mover",
     "What's the Data Structure Utilized by the Solution?",
@@ -9,6 +11,7 @@ const Questions = [
     "Question Link [Optional]",
     "Any Additional Notes to be Stored?",
     "What Difficulty Level does the Question Belong To?",
+    `${getRepos()}`,
     "Please Enter 'confirm' if you're Ready to Proceed with the Commit"
 ]
 
