@@ -202,7 +202,6 @@ body {
 .sending-icon:hover {
     background-color: #212f3d;
     transition: 0.3s;
-    box-shadow: 5px 5px 5px 5px rgb(105, 221, 241);
 }
 
 .sending-icon .fa-paper-plane{

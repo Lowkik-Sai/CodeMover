@@ -5,6 +5,13 @@ const octokit = new Octokit({
     auth: process.env.gitToken
 })
 
+const AWS = require('aws-sdk');
+require('dotenv').config();
+
+AWS.config.update({region: process.env.AWS_REGION});
+
+var ddb = new AWS.DynamoDB({ apiVersion: "2012-08-10" });
+
 let responseCode = 200;
 let responseMessage = "Undefined";
 
@@ -30,6 +37,24 @@ const commitCodeModule = {
                 },
                 sha // Include the SHA hash of the file
             });
+
+            
+            // Update total contributions in database
+            const params = {
+                TableName: "Auth",
+                Key: {
+                    "User_Name": { "S": owner }
+                },
+                UpdateExpression: "SET Total_Contributions = if_not_exists(Total_Contributions, :zero) + :one",
+                ExpressionAttributeValues: {
+                    ":zero": { "N": "0" },
+                    ":one": { "N": "1" }
+                },
+                ReturnValues: "UPDATED_NEW"
+            };
+
+            const updatedContributions = await ddb.updateItem(params).promise();
+            console.log("Updated total contributions:", updatedContributions);
 
             responseMessage = "Alright!";
         } catch (error) {
