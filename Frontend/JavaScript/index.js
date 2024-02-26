@@ -111,4 +111,21 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Focus at the start of the textarea
     inputEl.setSelectionRange(0, 0);
+
+    fetch('http://127.0.0.1:8080/getcontribution/Naganathan05')
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to fetch data from API');
+        }
+        return response.json();
+    })
+    .then(data => {
+        // Assign the fetched data to the div element
+        console.log(data);
+        const divElement = document.querySelector('.circle');
+        divElement.textContent = data;
+    })
+    .catch(error => {
+        console.error('Error fetching data from API:', error);
+    });
 });
