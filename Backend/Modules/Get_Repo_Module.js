@@ -1,6 +1,6 @@
 const {Octokit} = require("@octokit/core")
 require("dotenv").config()
-
+const Access_Token = process.env.gitToken;
 let responseCode = 200;
 let responseBody = "";
 
