@@ -45,6 +45,49 @@ body {
     background: #212f3d;
 }
 
+.leftbar .contribution-container {
+    margin-top: 100%;
+    height: 150px;
+    align-items: center;
+    justify-content: center;
+    background-color: #212f3d;
+}
+
+.circle {
+    color: white;
+    font-family: "Poppins", sans-serif;
+    width: 100px;
+    height: 100px;
+    border: 3px solid transparent;
+    border-radius: 50%;
+    font-size: 25px;
+    margin-left: 40px;
+    padding-top: 30px;
+    padding-left: 0px;
+    color: #fff;
+    text-align: center;
+    background: rgb(40, 40, 40);
+    border-color: #50C4ED;
+}
+
+.circle:hover {
+    scale: 1.1;
+    transition: 0.2s;
+    opacity: 1.5;
+    border: 4px solid transparent;
+    border-color: #387ADF;
+}
+
+
+.Total_Contributions {
+    color: white;
+    font-family: "Poppins", sans-serif;
+    font-size: 20px;
+    padding-top: 10px;
+    padding-left: 6px;
+}
+
+
 .profile {
     background-color: black;
     margin-top: 30px;
@@ -81,8 +124,11 @@ body {
 }
 
 .card-header{
+    color: white;
+    font-family: "Poppins", sans-serif;
     background-color: #212f3d;
     border-radius: 10px 10px 0px 0px;
+    font-size: 12px;
     padding: 1rem;
     color: #fff;
 }
@@ -106,8 +152,11 @@ body {
 }
 
 .card-body{
+    color: rgb(0, 0, 0);
+    font-family: "Poppins", sans-serif;
     padding: 0.8rem;
-    font-size: 1rem;
+    font-weight: 500;
+    font-size: 0.9rem;
     height: 400px;
     overflow-y: auto;
 }
