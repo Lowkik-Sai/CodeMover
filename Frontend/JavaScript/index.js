@@ -2,6 +2,7 @@
 
 import { Questions } from "./Questionnaire.js";
 
+
 function sendDataToBackend(data) {
     fetch('http://localhost:8080/api/getAnswers', {
         method: 'POST',
@@ -26,9 +27,10 @@ function sendDataToBackend(data) {
 }
 
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", async function() {
     let countOfQns = 0;
-    const globalQuestions = Questions;
+    const globalQuestions = await Questions();
+    console.log("Questions :"+Questions())
 
     let answersReceived = [];
     let countOfAns = 0;
@@ -102,4 +104,21 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Focus at the start of the textarea
     inputEl.setSelectionRange(0, 0);
+
+    fetch('http://127.0.0.1:8080/getcontribution/Naganathan05')
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to fetch data from API');
+        }
+        return response.json();
+    })
+    .then(data => {
+        // Assign the fetched data to the div element
+        console.log(data);
+        const divElement = document.querySelector('.circle');
+        divElement.textContent = data;
+    })
+    .catch(error => {
+        console.error('Error fetching data from API:', error);
+    });
 });
