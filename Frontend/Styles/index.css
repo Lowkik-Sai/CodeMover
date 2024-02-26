@@ -7,7 +7,6 @@
 }
 
 body {
-    background-image: url('../Images/pexels-photo-5087702.jpeg');
     margin: 0;
     padding-top: 5px; /* Adjusted for fixed navbar */
 }
@@ -186,10 +185,24 @@ body {
 
 
 .sending-icon{
+    border-radius: 40px; 
+    background-color: #387ADF; 
+    width: 60px ;
+    height: 60px; 
+    align-items: center; 
+    justify-content: center; 
+    margin-right: 0px; 
+    margin-left: 5px;
     right: 5px;
     display: flex; /* Add this to align the icon properly */
     align-items: center; /* Add this to vertically center the icon */
     margin-right: 5px; /* Adjust as needed */
+}
+
+.sending-icon:hover {
+    background-color: #212f3d;
+    transition: 0.3s;
+    box-shadow: 5px 5px 5px 5px rgb(105, 221, 241);
 }
 
 .sending-icon .fa-paper-plane{
@@ -198,6 +211,11 @@ body {
     cursor: pointer;
 }
 
+
+.sending-icon:active {
+    background-color: #40A2D8;
+    transition: 0.1s;
+}
 
 
 

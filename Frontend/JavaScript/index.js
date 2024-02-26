@@ -42,7 +42,6 @@ function pasteIntoInput(el, text) {
 document.addEventListener("DOMContentLoaded", function() {
     let countOfQns = 0;
     const globalQuestions = [
-        "Welcome to Code-Mover",
         "What's the Data Structure Utilized by the Solution?",
         "Enter the Question Name",
         "In which Programming Language was the Solution Crafted?",
