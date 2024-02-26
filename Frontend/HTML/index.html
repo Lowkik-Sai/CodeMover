@@ -40,9 +40,14 @@
                 <div class="User-Name">
                     UserName
                 </div>
-                <div>
-
+                <div class="menu-container" onclick="myFunction(this)">
+                    <div class="bar1"></div>
+                    <div class="bar2"></div>
+                    <div class="bar3"></div>
                 </div>
+            </div>
+            <div class = "dropdown">
+                Log Out
             </div>
             <div class="contribution-container">
                 <div class="circle">
@@ -58,7 +63,7 @@
             <div class="main-container">
                 <div class="cards">
                     <div class="card-header">
-                        <h2>CodeMover   Chat</h2>
+                        <pre><h2>Chat Bot</h2></pre>
                     </div>
                     <div class="card-body">
                         <div class="chat chat-bot">
@@ -81,6 +86,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.waves.min.js"></script>
 <script>
+function myFunction(x) {
+    x.classList.toggle("change");
+}
+
 document.addEventListener('DOMContentLoaded', function () {
     VANTA.NET({
         el: "#vanta-container",
