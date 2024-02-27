@@ -10,7 +10,7 @@ async function getRepos() {
             throw new Error('Network response was not ok');
         }
         const responseData = await response.json();
-        console.log('Data sent to backend:', responseData);
+        console.log('Repos List :', responseData);
         return responseData;
     } catch (error) {
         console.error('Error sending data to backend:', error);

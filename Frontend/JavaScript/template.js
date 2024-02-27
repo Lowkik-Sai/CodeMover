@@ -17,7 +17,7 @@ async function code(answersReceived){
         "ownerMail" : "lowkiksaipotnuru@gmail.com",
         "content" : `${answersReceived["Please Provide the Code for the Solution"]}`
     }
-    console.log(req);
+    console.log(`Repo name : ${repo} and Qn name : ${title}`)
     let commentStarting = "\"\"\"";
     let commentEnding   = "\"\"\"";
     if(langName=="Python"){
@@ -27,14 +27,14 @@ async function code(answersReceived){
         commentStarting = "\/\*";
         commentEnding   = "\*\/";
     }
-    const template=`
+    let template=`
     ${commentStarting}
     Time complexity : ${tC}
     Space complexity : ${sC}
     ${commentEnding}
 
 
-    ${code}
+    ${req.content}
 
 
     ${commentStarting}
@@ -53,7 +53,7 @@ async function code(answersReceived){
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*'
             },
-            body: req
+            body: JSON.stringify(req)
         });
         if (!response.ok) {
             throw new Error('Network response was not ok');
