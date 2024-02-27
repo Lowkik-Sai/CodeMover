@@ -29,11 +29,13 @@ const Questions = async () => [
     "In which Programming Language was the Solution Crafted?",
     "What's the Time Complexity of the Solution?",
     "What's the Space Complexity of the Solution?",
+    "What's the Problem Difficulty Level?",
     "Please Provide the Code for the Solution",
     "Question Link [Optional]",
     "Any Additional Notes to be Stored?",
     "What Difficulty Level does the Question Belong To?",
-    `${await userRepos}`,
+    `Repos List :\n${await userRepos}`,
+    "Enter Repo Name:",
     "Please Enter 'confirm' if you're Ready to Proceed with the Commit"
 ];
 

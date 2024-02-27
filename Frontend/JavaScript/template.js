@@ -1,9 +1,22 @@
-async function code(tC=null,sC=null,langName,code,authorName=null,questionLink=null){
+async function code(answersReceived){
 
-    if (tC==null) tC="Not defined";
-    if (sC==null) sC="Not defined";
-    if (authorName==null) authorName="Not defined";
-    if (questionLink==null) questionLink="Not defined";
+    let owner = sessionStorage.getItem('User_Name');
+    let repo = answersReceived["Enter Repo Name"];
+    let dataStructure = answersReceived["What's the Data Structure Utilized by the Solution?"];
+    let title = answersReceived["Enter the Question Name"];
+
+    let tC=answersReceived["What's the Time Complexity of the Solution?"]
+    let sC=answersReceived["What's the Space Complexity of the Solution?"]
+    let questionLink=answersReceived["Question Link [Optional]"]
+    let langName=answersReceived["In which Programming Language was the Solution Crafted?"]
+    let authorName=owner
+
+    let req = {
+        "commitMessage" : `${answersReceived["What's the Problem Difficulty Level?"]}`,
+        "ownerMail" : "lowkiksaipotnuru@gmail.com",
+        "content" : `${answersReceived["Please Provide the Code for the Solution"]}`
+    }
+
     if(langName=="Python"){
         commentStarting = "\"\"\"";
         commentEnding   = "\"\"\"";
@@ -42,7 +55,7 @@ async function code(tC=null,sC=null,langName,code,authorName=null,questionLink=n
             throw new Error('Network response was not ok');
         }
         const responseData = await response.json();
-        console.log('Data sent to backend:', responseData);
+        console.log('Successfully Committed Message', responseData);
         return responseData;
     } catch (error) {
         console.error('Error sending data to backend:', error);

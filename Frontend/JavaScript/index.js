@@ -3,7 +3,6 @@
 import { Questions } from "./Questionnaire.js";
 import { code } from "./template.js";
 
-
 function sendDataToBackend(data) {
     fetch('http://localhost:8080/api/getAnswers', {
         method: 'POST',
@@ -27,13 +26,11 @@ function sendDataToBackend(data) {
     });
 }
 
-
 document.addEventListener("DOMContentLoaded", async function() {
     let countOfQns = 1;
     const globalQuestions = await Questions();
-    console.log("Questions :"+Questions())
 
-    let answersReceived = [];
+    let answersReceived = {};
     let countOfAns = 0;
 
     const inputEl = document.querySelector(".input-chat");
@@ -51,19 +48,21 @@ document.addEventListener("DOMContentLoaded", async function() {
 
     function manageChat() {
         userMessage = inputEl.value.trim();
-        if (!userMessage && !countOfAns) return;
-        if (countOfAns) {
-            countOfAns += 1;
-            answersReceived.push(userMessage);
-            inputEl.value = "";
-            if (countOfAns == globalQuestions.length) {
-                console.log("Questions Finished")
-                sendDataToBackend(answersReceived) //Simply for checking for connect frontend to backend!!
-                code(answersReceived);
-                countOfAns = 0;
-                answersReceived = [];
-            }
+        if(!userMessage){
+            answersReceived[globalQuestions[countOfQns]]="Not Defined";
+            return
+        }              
+        countOfAns += 1;              
+        answersReceived[globalQuestions[countOfQns]]=userMessage;              
+        inputEl.value = "";              
+        if (countOfAns == globalQuestions.length) {              
+            console.log("Questions Finished")              
+            sendDataToBackend(answersReceived) //Simply for checking for connect frontend to backend!!              
+            code(answersReceived);              
+            countOfAns = 0;              
+            answersReceived = {};              
         }
+       
 
         // Append user message
         cardbodyEl.appendChild(messageEl(userMessage, "user"));
