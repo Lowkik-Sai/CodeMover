@@ -49,11 +49,11 @@ document.addEventListener("DOMContentLoaded", async function() {
     function manageChat() {
         userMessage = inputEl.value.trim();
         if(!userMessage){
-            answersReceived[globalQuestions[countOfQns]]="Not Defined";
+            answersReceived[globalQuestions[countOfQns - 1]]="Not Defined";
             return
         }              
         countOfAns += 1;              
-        answersReceived[globalQuestions[countOfQns]]=userMessage;              
+        answersReceived[globalQuestions[countOfQns - 1]]=userMessage;              
         inputEl.value = "";              
         if (countOfAns == globalQuestions.length) {              
             console.log("Questions Finished")              
@@ -112,6 +112,9 @@ document.addEventListener("DOMContentLoaded", async function() {
 
     const username = sessionStorage.getItem('User_Name');
     console.log('User_Name: ', username);
+
+    const User_Div = document.querySelector('.User-Name');
+    User_Div.textContent = username;
 
     contribution_fetch_url = contribution_fetch_url + username;
     console.log(contribution_fetch_url);

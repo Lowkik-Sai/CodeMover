@@ -1,6 +1,7 @@
 async function code(answersReceived){
 
     let owner = sessionStorage.getItem('User_Name');
+    let jwt_token = sessionStorage.getItem('JWT_Token');
     let repo = answersReceived["Enter Repo Name"];
     let dataStructure = answersReceived["What's the Data Structure Utilized by the Solution?"];
     let title = answersReceived["Enter the Question Name"];
@@ -16,7 +17,9 @@ async function code(answersReceived){
         "ownerMail" : "lowkiksaipotnuru@gmail.com",
         "content" : `${answersReceived["Please Provide the Code for the Solution"]}`
     }
-
+    console.log(req);
+    let commentStarting = "\"\"\"";
+    let commentEnding   = "\"\"\"";
     if(langName=="Python"){
         commentStarting = "\"\"\"";
         commentEnding   = "\"\"\"";
@@ -24,7 +27,7 @@ async function code(answersReceived){
         commentStarting = "\/\*";
         commentEnding   = "\*\/";
     }
-    template=`
+    const template=`
     ${commentStarting}
     Time complexity : ${tC}
     Space complexity : ${sC}
@@ -48,6 +51,7 @@ async function code(answersReceived){
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
             },
             body: req
         });

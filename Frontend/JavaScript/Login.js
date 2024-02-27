@@ -45,6 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             console.log("User_Name:", username);
 
+            sessionStorage.setItem('JWT_Token', jwtToken);
             sessionStorage.setItem('User_Name', username);
 
             window.location.href = 'index.html';
