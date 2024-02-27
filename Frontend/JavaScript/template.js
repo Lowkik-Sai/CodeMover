@@ -2,7 +2,7 @@ async function code(answersReceived){
 
     let owner = sessionStorage.getItem('User_Name');
     let jwt_token = sessionStorage.getItem('JWT_Token');
-    let repo = answersReceived["Enter Repo Name"];
+    let repo = answersReceived["Enter Repo Name:"];
     let dataStructure = answersReceived["What's the Data Structure Utilized by the Solution?"];
     let title = answersReceived["Enter the Question Name"];
 
@@ -11,13 +11,7 @@ async function code(answersReceived){
     let questionLink=answersReceived["Question Link [Optional]"]
     let langName=answersReceived["In which Programming Language was the Solution Crafted?"]
     let authorName=owner
-
-    let req = {
-        "commitMessage" : `${answersReceived["What's the Problem Difficulty Level?"]}`,
-        "ownerMail" : "lowkiksaipotnuru@gmail.com",
-        "content" : `${answersReceived["Please Provide the Code for the Solution"]}`
-    }
-    console.log(`Repo name : ${repo} and Qn name : ${title}`)
+    
     let commentStarting = "\"\"\"";
     let commentEnding   = "\"\"\"";
     if(langName=="Python"){
@@ -27,6 +21,7 @@ async function code(answersReceived){
         commentStarting = "\/\*";
         commentEnding   = "\*\/";
     }
+    
     let template=`
     ${commentStarting}
     Time complexity : ${tC}
@@ -46,6 +41,13 @@ async function code(answersReceived){
 
     console.log(template);
 
+    let req = {
+        "commitMessage" : `${answersReceived["What's the Problem Difficulty Level?"]}`,
+        "ownerMail" : "lowkiksaipotnuru@gmail.com",
+        "content" : `${template}`
+    }
+    console.log(`Repo name : ${repo} and Qn name : ${title}`)
+
     try {
         const response = await fetch(`http://localhost:8080/commitCode/${owner}/${repo}/${dataStructure}/${title}`, {
             method: 'PUT',
@@ -60,7 +62,6 @@ async function code(answersReceived){
         }
         const responseData = await response.json();
         console.log('Successfully Committed Message', responseData);
-        return responseData;
     } catch (error) {
         console.error('Error sending data to backend:', error);
     }
