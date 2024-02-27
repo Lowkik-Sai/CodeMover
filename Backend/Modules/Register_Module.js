@@ -4,7 +4,12 @@ const crypto = require('crypto');
 require('dotenv').config();
 
 const Validate_UserName = require('../Middleware/Validate_UserName');
-AWS.config.update({region: process.env.AWS_REGION});
+
+AWS.config.update({
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    region: process.env.AWS_REGION
+});
 
 var ddb = new AWS.DynamoDB({ apiVersion: "2012-08-10" });
 
