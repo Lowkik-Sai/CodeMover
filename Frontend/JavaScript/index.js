@@ -1,6 +1,7 @@
 "use strict";
 
 import { Questions } from "./Questionnaire.js";
+import { code } from "./template.js";
 
 
 function sendDataToBackend(data) {
@@ -28,7 +29,7 @@ function sendDataToBackend(data) {
 
 
 document.addEventListener("DOMContentLoaded", async function() {
-    let countOfQns = 0;
+    let countOfQns = 1;
     const globalQuestions = await Questions();
     console.log("Questions :"+Questions())
 
@@ -45,6 +46,7 @@ document.addEventListener("DOMContentLoaded", async function() {
         robot = robot.querySelector(".robot");
         robot.textContent = globalQuestions[countOfQns];
         countOfQns += 1;
+        if(countOfQns==globalQuestions.length) countOfQns=0
     }
 
     function manageChat() {
@@ -54,9 +56,10 @@ document.addEventListener("DOMContentLoaded", async function() {
             countOfAns += 1;
             answersReceived.push(userMessage);
             inputEl.value = "";
-            if (countOfAns == 3) {
+            if (countOfAns == globalQuestions.length) {
                 console.log("Questions Finished")
-                sendDataToBackend(answersReceived);
+                sendDataToBackend(answersReceived) //Simply for checking for connect frontend to backend!!
+                code(answersReceived);
                 countOfAns = 0;
                 answersReceived = [];
             }
