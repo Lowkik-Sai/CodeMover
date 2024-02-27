@@ -105,7 +105,15 @@ document.addEventListener("DOMContentLoaded", async function() {
     // Focus at the start of the textarea
     inputEl.setSelectionRange(0, 0);
 
-    fetch('http://127.0.0.1:8080/getcontribution/Naganathan05')
+
+    let contribution_fetch_url = 'http://127.0.0.1:8080/getcontribution/';
+
+    const username = sessionStorage.getItem('User_Name');
+    console.log('User_Name: ', username);
+
+    contribution_fetch_url = contribution_fetch_url + username;
+    console.log(contribution_fetch_url);
+    fetch(contribution_fetch_url)
     .then(response => {
         if (!response.ok) {
             throw new Error('Failed to fetch data from API');
