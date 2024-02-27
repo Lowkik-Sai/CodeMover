@@ -21,7 +21,7 @@ async function code(answersReceived){
         commentStarting = "\/\*";
         commentEnding   = "\*\/";
     }
-    
+
     let template=`
     ${commentStarting}
     Time complexity : ${tC}
@@ -29,7 +29,7 @@ async function code(answersReceived){
     ${commentEnding}
 
 
-    ${req.content}
+    ${answersReceived["Please Provide the Code for the Solution"]}
 
 
     ${commentStarting}
