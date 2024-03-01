@@ -16,7 +16,7 @@ async function code(answersReceived){
     if(langName=="Python" || langName=="python" || langName =="PYTHON"){
         commentStarting = "\"\"\"";
         commentEnding   = "\"\"\"";
-    }else if(langName=="Cpp" || langName == "CPP" || langName == "cpp" || langName == "C++"){
+    }else if(langName=="CPP" || langName=="JAVA" || langName=="JAVASCRIPT"){
         commentStarting = "\/\*";
         commentEnding   = "\*\/";
     }
@@ -50,12 +50,12 @@ async function code(answersReceived){
         console.log("User Email: ", ownerMail);
         ownerMail = await ownerMail.json();
 
-        let req = {
-            "commitMessage" : `${answersReceived["What's the Problem Difficulty Level?"]}`,
-            "ownerMail" : ownerMail,
-            "content" : `${template}`
-        }
-        console.log(`Repo name : ${repo} and Qn name : ${title}`);
+    let req = {
+        "commitMessage" : `${answersReceived["What's the Problem Difficulty Level?"]}`,
+        "ownerMail" : ownerMail,
+        "content" : `${template}`
+    }
+    console.log(`Repo name : ${repo} and Qn name : ${title}`)
 
         const response = await fetch(`http://localhost:8080/commitCode/${owner}/${repo}/${dataStructure}/${title}`, {
             method: 'PUT',
