@@ -8,6 +8,15 @@
     overflow: hidden;
 }
 
+:root {
+	--dark: #34495E;
+	--light: #ffffff;
+	--success: #0ABF30;
+	--error: #E24D4C;
+	--warning: #E9BD0C;
+	--info: #3498DB;
+}
+
 body {
 	background: linear-gradient(90deg, #C7C5F4, #776BCC);		
 }
@@ -89,6 +98,16 @@ body {
 	width: 320px;
 	padding: 30px;
 	padding-top: 156px;
+}
+
+.error-notification {
+	visibility: hidden;
+	height: 50px;
+	width: 200px;
+	background-color: rebeccapurple;
+	padding-bottom: 10px;
+	align-items: center;
+	padding-left: 70px;
 }
 
 .login__field {
@@ -178,3 +197,52 @@ body {
 .social-login__icon:hover {
 	transform: scale(1.5);	
 }
+
+#error {
+	font-family: Raleway, sans-serif;
+	font-weight: 700;
+	font-size: 20px;
+	visibility: hidden; /* Hidden by default. Visible on click */
+	height: 80px;
+	min-width: 350px; /* Set a default minimum width */
+	margin-left: -80px; /* Divide value of min-width by 2 */
+	background-color: #ffffff; /* Black background color */
+	color: #000000; /* White text color */
+	text-align: center; /* Centered text */
+	padding: 16px; /* Padding */
+	padding-top: 30px;
+	border-radius: 2px; /* Rounded borders */
+	position: fixed; /* Sit on top of the screen */
+	z-index: 1; /* Add a z-index if needed */
+	left: 666px; /* Center the snackbar */
+	bottom: 40px; /* 30px from the bottom */
+	border: 3px solid;
+	border-color: black;
+	border-radius: 20px;
+  }
+
+  #error.show {
+	visibility: visible;
+	-webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+	animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  }
+  
+  @-webkit-keyframes fadein {
+	from {bottom: 0; opacity: 0;}
+	to {bottom: 30px; opacity: 1;}
+  }
+  
+  @keyframes fadein {
+	from {bottom: 0; opacity: 0;}
+	to {bottom: 30px; opacity: 1;}
+  }
+  
+  @-webkit-keyframes fadeout {
+	from {bottom: 30px; opacity: 1;}
+	to {bottom: 0; opacity: 0;}
+  }
+  
+  @keyframes fadeout {
+	from {bottom: 30px; opacity: 1;}
+	to {bottom: 0; opacity: 0;}
+  }

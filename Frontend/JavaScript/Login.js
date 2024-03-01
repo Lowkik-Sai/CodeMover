@@ -32,6 +32,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 // Parse the JSON response to access the message
                 return response.json().then(errorData => {
                     console.log(errorData.message);
+                    var x = document.getElementById("error");
+                    x.className = "show";
+                    x.innerText = errorData.message;
+                    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
                 });
             }
             return response.json();
@@ -44,6 +48,11 @@ document.addEventListener('DOMContentLoaded', function () {
             const username = decodedPayload.User_Name;
 
             console.log("User_Name:", username);
+
+            var x = document.getElementById("error");
+            x.className = "show";
+            x.innerText = "Successfully Logged In";
+            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
 
             sessionStorage.setItem('JWT_Token', jwtToken);
             sessionStorage.setItem('User_Name', username);

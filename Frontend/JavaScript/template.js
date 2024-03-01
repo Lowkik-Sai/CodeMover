@@ -29,7 +29,7 @@ async function code(answersReceived){
     ${commentEnding}
 
 
-    ${req.content}
+    ${answersReceived["Please Provide the Code for the Solution"]}
 
 
     ${commentStarting}
