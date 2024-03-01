@@ -3,6 +3,7 @@
 import { Questions } from "./Questionnaire.js";
 import { code } from "./template.js";
 
+//Testing from frontend to backend
 function sendDataToBackend(data) {
     fetch('http://localhost:8080/api/getAnswers', {
         method: 'POST',
@@ -24,6 +25,13 @@ function sendDataToBackend(data) {
     .catch(error => {
         console.error('Error sending data to backend:', error);
     });
+}
+
+//Comparing strings using local compare function
+function isEquals(a, b) {
+    return typeof a === 'string' && typeof b === 'string'
+        ? a.localeCompare(b, undefined, { sensitivity: 'base' }) === 0
+        : a === b;
 }
 
 document.addEventListener("DOMContentLoaded", async function() {
@@ -51,24 +59,52 @@ document.addEventListener("DOMContentLoaded", async function() {
         if(!userMessage){
             answersReceived[globalQuestions[countOfQns - 1]]="Not Defined";
             return
-        }              
+        }   
+        // Append user message
+        cardbodyEl.appendChild(messageEl(userMessage, "user"));
+        
+        // Scroll to the bottom of the chat body after user message
+        cardbodyEl.scrollTop = cardbodyEl.scrollHeight;
+
+        //Terminate the process and Restart the command
+        if(isEquals(userMessage,"terminate") || isEquals(userMessage,"restart")){
+            countOfQns=0;
+            countOfAns=0;
+            setTimeout(() => {
+                messageEl("Terminated Process", "chat-bot");
+                const robotMessage = messageEl("Restarted!", "chat-bot");
+                cardbodyEl.append(robotMessage);
+                // Scroll to the bottom of the chat body after robot message
+                cardbodyEl.scrollTop = cardbodyEl.scrollHeight;
+            }, 300);
+
+            setTimeout(() => {
+                const robotMessage = messageEl("From Beginning", "chat-bot");
+                cardbodyEl.append(robotMessage);
+                functionName(robotMessage);
+                // Scroll to the bottom of the chat body after robot message
+                cardbodyEl.scrollTop = cardbodyEl.scrollHeight;
+            }, 1000);
+            
+            return;
+        }
+        
         countOfAns += 1;              
         answersReceived[globalQuestions[countOfQns - 1]]=userMessage;              
-        inputEl.value = "";              
+        inputEl.value = ""; 
         if (countOfAns == globalQuestions.length) {              
             console.log("Questions Finished")              
-            sendDataToBackend(answersReceived) //Simply for checking for connect frontend to backend!!              
-            code(answersReceived);              
+            sendDataToBackend(answersReceived) //Simply for checking for connect frontend to backend!!  
+            console.log("last q " + globalQuestions[countOfQns - 1]);
+            if(isEquals(answersReceived[globalQuestions[countOfQns - 1]],"confirm")){
+                code(answersReceived);              
+            }           
             countOfAns = 0;              
             answersReceived = {};              
         }
        
 
-        // Append user message
-        cardbodyEl.appendChild(messageEl(userMessage, "user"));
 
-        // Scroll to the bottom of the chat body after user message
-        cardbodyEl.scrollTop = cardbodyEl.scrollHeight;
 
         // Simulate robot response
         setTimeout(() => {
