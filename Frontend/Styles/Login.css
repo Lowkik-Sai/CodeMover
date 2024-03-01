@@ -100,16 +100,6 @@ body {
 	padding-top: 156px;
 }
 
-.error-notification {
-	visibility: hidden;
-	height: 50px;
-	width: 200px;
-	background-color: rebeccapurple;
-	padding-bottom: 10px;
-	align-items: center;
-	padding-left: 70px;
-}
-
 .login__field {
 	padding: 20px 0px;	
 	position: relative;	
@@ -178,24 +168,12 @@ body {
 	bottom: 0px;
 	right: 0px;
 	color: #000000;
+	padding-top: 20px;
 }
 
-.social-icons {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
-
-.social-login__icon {
-	scale: 1.5;
-	padding: 20px 10px;
-	color: #000000;
-	text-decoration: none;	
-	text-shadow: 0px 0px 8px #7875B5;
-}
-
-.social-login__icon:hover {
-	transform: scale(1.5);	
+.social-login a {
+	color: black;
+	font-size: 18px;
 }
 
 #error {

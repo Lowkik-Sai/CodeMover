@@ -1,7 +1,6 @@
 async function code(answersReceived){
 
     let owner = sessionStorage.getItem('User_Name');
-    let jwt_token = sessionStorage.getItem('JWT_Token');
     let repo = answersReceived["Enter Repo Name:"];
     let dataStructure = answersReceived["What's the Data Structure Utilized by the Solution?"];
     let title = answersReceived["Enter the Question Name"];
@@ -38,17 +37,26 @@ async function code(answersReceived){
     ${commentEnding}
 
     `
-
     console.log(template);
 
-    let req = {
-        "commitMessage" : `${answersReceived["What's the Problem Difficulty Level?"]}`,
-        "ownerMail" : "lowkiksaipotnuru@gmail.com",
-        "content" : `${template}`
-    }
-    console.log(`Repo name : ${repo} and Qn name : ${title}`)
-
     try {
+        let ownerMail = await fetch(`http://127.0.0.1:8080/getemail/${owner}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            }
+        });
+        console.log("User Email: ", ownerMail);
+        ownerMail = await ownerMail.json();
+
+        let req = {
+            "commitMessage" : `${answersReceived["What's the Problem Difficulty Level?"]}`,
+            "ownerMail" : ownerMail,
+            "content" : `${template}`
+        }
+        console.log(`Repo name : ${repo} and Qn name : ${title}`);
+
         const response = await fetch(`http://localhost:8080/commitCode/${owner}/${repo}/${dataStructure}/${title}`, {
             method: 'PUT',
             headers: {
