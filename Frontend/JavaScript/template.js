@@ -13,10 +13,10 @@ async function code(answersReceived){
     
     let commentStarting = "\"\"\"";
     let commentEnding   = "\"\"\"";
-    if(langName=="Python"){
+    if(langName=="Python" || langName=="python" || langName =="PYTHON"){
         commentStarting = "\"\"\"";
         commentEnding   = "\"\"\"";
-    }else if(langName=="Cpp"){
+    }else if(langName=="Cpp" || langName == "CPP" || langName == "cpp" || langName == "C++"){
         commentStarting = "\/\*";
         commentEnding   = "\*\/";
     }

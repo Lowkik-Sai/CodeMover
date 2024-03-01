@@ -15,7 +15,6 @@ document.addEventListener('DOMContentLoaded', function () {
             User_Name: username,
             Password: password
         };
-
         
         console.log(username);
         console.log(password)
@@ -29,12 +28,17 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .then(response => {
             if (!response.ok) {
-                // Parse the JSON response to access the message
                 return response.json().then(errorData => {
                     console.log(errorData.message);
                     var x = document.getElementById("error");
                     x.className = "show";
-                    x.innerText = errorData.message;
+                    if(username == "" && password == ""){
+                        x.innerText = "Invalid Credentials";
+                    }
+                    else{
+                        x.innerText = errorData.message;
+                    }
+
                     setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
                 });
             }
@@ -60,7 +64,6 @@ document.addEventListener('DOMContentLoaded', function () {
             window.location.href = 'index.html';
         })
         .catch(error => {
-            // Handle errors
             console.error('Error:', error);
         });
     });
