@@ -88,6 +88,7 @@ document.addEventListener("DOMContentLoaded", async function() {
             
             return;
         }
+
         
         countOfAns += 1;              
         answersReceived[globalQuestions[countOfQns - 1]]=userMessage;              
@@ -102,19 +103,36 @@ document.addEventListener("DOMContentLoaded", async function() {
             countOfAns = 0;              
             answersReceived = {};              
         }
-       
-
-
-
+        
+        
+        
+        //Skip back to previous question
+        if(isEquals(userMessage,"previous")){
+            if(countOfQns<2){
+                countOfQns=0;
+                countOfAns=0;
+                setTimeout(() => {
+                    const robotMessage = messageEl("No More Previous Questions!", "chat-bot");
+                    cardbodyEl.append(robotMessage);
+                    // Scroll to the bottom of the chat body after robot message
+                    cardbodyEl.scrollTop = cardbodyEl.scrollHeight;
+                }, 300);
+            }else{
+            countOfQns-=2;
+            countOfAns-=2;
+            }
+        }
+        
         // Simulate robot response
         setTimeout(() => {
             const robotMessage = messageEl("Thinking...", "chat-bot");
             cardbodyEl.append(robotMessage);
             functionName(robotMessage);
-
+            
             // Scroll to the bottom of the chat body after robot message
             cardbodyEl.scrollTop = cardbodyEl.scrollHeight;
         }, 300);
+
     }
 
     const messageEl = (message, className) => {
