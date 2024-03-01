@@ -21,7 +21,7 @@ async function code(answersReceived){
         commentStarting = "\/\*";
         commentEnding   = "\*\/";
     }
-    
+
     let template=`
     ${commentStarting}
     Time complexity : ${tC}
