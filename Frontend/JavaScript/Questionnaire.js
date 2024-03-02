@@ -33,7 +33,6 @@ const Questions = async () => [
     "Please Provide the Code for the Solution",
     "Question Link [Optional]",
     "Any Additional Notes to be Stored?",
-    "What Difficulty Level does the Question Belong To?",
     `Repos List :\n${await userRepos}`,
     "Enter Repo Name:",
     "Please Enter 'confirm' if you're Ready to Proceed with the Commit"
