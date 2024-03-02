@@ -11,6 +11,10 @@ body {
     padding-top: 5px; /* Adjusted for fixed navbar */
 }
 
+#vanta-container .blurrstyle {
+    opacity: 0.5;
+    filter: blur(10px);
+}
 
 .navbar-container {
     position: fixed;
@@ -18,7 +22,7 @@ body {
     left: 22%;
     right: 20%;
     display: flex;
-    z-index: 1000; /* Ensure navbar is above other content */
+    z-index: 1000; 
     border-radius: 5px;
     justify-content: center;
     align-items: center;
@@ -59,26 +63,59 @@ body {
     font-family: "Poppins", sans-serif;
     justify-content: center;
     align-items: center;
-    font-size: larger;
+    font-size: 17px;
     padding-top: 15px;
     color: white;
     padding-left: 15px;
 }
 
-
-.dropdown {
+.dropdown-menu {
+    visibility: hidden;
+    height: 120px;
+    width: 200px;
+    background-color: #4F709C;
     color: white;
-    font-family: "Poppins", sans-serif;
-    font-size: 22px;
-    padding-left: 20px;
-    padding-top: 12px;
+    border-radius: 20px;
 }
 
+.settings-container {
+    display: flex;
+    height: 60px;
+    background-color: #4F709C;
+    border-radius: 0px 0px 20px 20px;
+    padding-top: 15px;
+    padding-left: 30px;
+}
+
+.settings {
+    font-family: "Poppins", sans-serif;
+    font-size: 18px;
+}
+
+.settings:hover {
+    scale: 1.1;
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+.logout {
+    border-radius: 0px 0px 20px 20px;
+    padding-top: 15px;
+    padding-left: 30px;
+    font-family: "Poppins", sans-serif;
+    font-size: 18px;
+}
+
+.logout:hover {
+    scale: 1.1;
+    transition: 0.2s;
+    cursor: context-menu;
+}
 
 .menu-container {
     display: inline-block;
     cursor: pointer;
-    padding-left: 27px;
+    padding-left: 20px;
     padding-top: 18px;
 }
 
@@ -101,7 +138,7 @@ body {
   }
 
 .leftbar .contribution-container {
-    margin-top: 100%;
+    margin-top: 40%;
     height: 150px;
     align-items: center;
     justify-content: center;
@@ -307,6 +344,110 @@ body {
     background-color: #40A2D8;
     transition: 0.1s;
 }
+
+
+.settings-layout {
+    display: block;
+    background-color: black;
+    height: 500px;
+    width: 660px;
+    padding: 5px;
+    background-color: #17202a;
+    border-radius: 10px;
+    box-shadow: 5px 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.settings-header {
+    height: 50px;
+    font-family: "Poppins", sans-serif;
+    color: rgb(0, 0, 0);
+    font-size: 30px;
+    background-color: #212f3d;
+    padding-left: 250px;
+    border-radius: 10px;
+}
+
+.settings-body {
+    height: 425px;
+    width: 650px;
+    margin-top: 10px;
+    background-color: #212f3d;
+    border-radius: 10px;
+    display: flex;
+}
+
+.settings-controls {
+    height: 425px;
+    width: 450px;
+    background-color: #ffffff;
+}
+
+.login {
+	width: 450px;
+	padding: 30px;
+	padding-top: 50px;
+    padding-left: 50px;
+}
+
+.login__field {
+	padding: 15px 0px;	
+	position: relative;	
+}
+
+.login__icon {
+	position: absolute;
+	top: 30px;
+	color: #000000;
+}
+
+.login__input {
+	border: none;
+	border-bottom: 2px solid #D1D1D4;
+	background: none;
+	padding: 10px;
+	padding-left: 24px;
+	font-weight: 700;
+	width: 75%;
+	transition: .2s;
+}
+
+.login__input:active,
+.login__input:focus,
+.login__input:hover {
+	outline: none;
+	border-bottom-color: #000000;
+}
+
+.login__submit {
+	background: #fff;
+	font-size: 14px;
+	margin-top: 30px;
+	padding: 16px 20px;
+	border-radius: 26px;
+	border: 1px solid #D4D3E8;
+	text-transform: uppercase;
+	font-weight: 700;
+	display: flex;
+	align-items: center;
+	width: 100%;
+	color: #000000;
+	box-shadow: 0px 2px 2px #000000;
+	cursor: pointer;
+	transition: .2s;
+}
+
+.login__submit:active,
+.login__submit:focus,
+.login__submit:hover {
+	border-color: #000000;
+	outline: none;
+}
+
+.settings-image {
+    margin-left: 5px;
+    padding-top: 100px;
+}
+
 
 
 

@@ -27,12 +27,14 @@ function sendDataToBackend(data) {
     });
 }
 
+
 //Comparing strings using local compare function
 function isEquals(a, b) {
     return typeof a === 'string' && typeof b === 'string'
         ? a.localeCompare(b, undefined, { sensitivity: 'base' }) === 0
         : a === b;
 }
+
 
 document.addEventListener("DOMContentLoaded", async function() {
     let countOfQns = 1;
@@ -46,6 +48,7 @@ document.addEventListener("DOMContentLoaded", async function() {
     const cardbodyEl = document.querySelector(".card-body");
 
     let userMessage;
+
 
     async function functionName(robot) {
         robot = robot.querySelector(".robot");

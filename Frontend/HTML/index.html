@@ -40,8 +40,23 @@
                 <div class="User-Name">
                     UserName
                 </div>
-                <div>
+                <div class="menu-container" onclick="myFunction(this)">
+                    <div class="bar1"></div>
+                    <div class="bar2"></div>
+                    <div class="bar3"></div>
+                </div>
+            </div>
+            <div class="dropdown-menu">
+                <div class="settings-container" onclick="SettingsFunction(this)">
+                    <div class="settings">
+                        Settings
+                    </div>
+                    <div class="settings-logo">
 
+                    </div>
+                </div>
+                <div class="logout">
+                    Logout
                 </div>
             </div>
             <div class="contribution-container">
@@ -56,9 +71,42 @@
 
         <div class="main">
             <div class="main-container">
+                <div class = "settings-layout">
+                    <div class="settings-header">
+                        Settings
+                    </div>
+                    <div class="settings-body">
+                        <div class="settings-controls">
+                            <form class="login">
+                                <div class="login__field">
+                                    User Name
+                                </div>
+                                <div class="login__field">
+                                    <i class="login__icon fa fa-user"></i>
+                                    <input type="text" class="login__input" placeholder="Email Id">
+                                </div>
+                                <div class="login__field">
+                                    <i class="login__icon fa fa-user"></i>
+                                    <input type="text" class="login__input" placeholder="Github Access Token">
+                                </div>
+                                <div class="login__field">
+                                    <i class="login__icon fa fa-lock"></i>
+                                    <input type="password" class="login__input" placeholder="Password">
+                                </div>
+                                <button class="button login__submit">
+                                    <span class="button__text">Save</span>
+                                    <i class="button__icon fa fa-chevron-right"></i>
+                                </button>				
+                            </form>
+                        </div>
+                        <div class="settings-image">
+                            <img src="../Images/user-png-33856.png" alt="" style="height: 190px; width: 190px;">
+                        </div>
+                    </div>
+                </div>
                 <div class="cards">
                     <div class="card-header">
-                        <h2>CodeMover   Chat</h2>
+                        <h2>Chat Bot</h2>
                     </div>
                     <div class="card-body">
                         <div class="chat chat-bot">
@@ -85,6 +133,24 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.waves.min.js"></script>
 <script>
+function myFunction(x) {
+    x.classList.toggle("change");
+    let dropdown = document.querySelector('.dropdown-menu');
+    let topbar = document.querySelector('.profile')
+    if(x.classList.contains("change")){
+        dropdown.style.visibility = 'visible';
+        topbar.style.borderRadius = '20px 20px 0px 0px';
+    }
+    else{
+        dropdown.style.visibility = 'hidden';
+        topbar.style.borderRadius = '20px';
+    }
+}
+
+function SettingsFunction(element) {
+    let cards = document.querySelector('.cards');
+    cards.style.visibility = 'hidden';
+}
 document.addEventListener('DOMContentLoaded', function () {
     VANTA.NET({
         el: "#vanta-container",
