@@ -348,7 +348,7 @@ body {
 
 .settings-layout {
     position: fixed;
-    display: block;
+    display: none;
     background-color: black;
     height: 500px;
     width: 660px;
@@ -360,12 +360,55 @@ body {
 
 .settings-header {
     height: 50px;
-    font-family: "Poppins", sans-serif;
-    color: rgb(0, 0, 0);
+    display: flex;
     font-size: 30px;
     background-color: #212f3d;
     padding-left: 250px;
     border-radius: 10px;
+}
+
+.settings-title {
+    font-family: "Poppins", sans-serif;
+    color: rgb(0, 0, 0);
+}
+
+.close-settings {
+    border: 2px solid black;
+    border-radius: 30px;
+    padding: 10px;
+    margin-right: 20px;
+    padding-top: 15px;
+    margin-left: 220px;
+    transition: 0.3s;
+    cursor: pointer;
+    background-color: #4F709C;
+}
+
+.close-settings:hover {
+    background-color: #D24545;
+}
+
+.close-settings:active {
+    background-color: #387ADF;
+    transition: 0.3s;
+}
+
+.close-1 {
+    width: 30px;
+    height: 3px;
+    background-color: #ffffff;
+    margin:4px 0;
+    transition: 0.4s;
+    transform: translate(0, 3px) rotate(-135deg);
+}
+
+.close-2 {
+    width: 30px;
+    height: 3px;
+    background-color: #ffffff;
+    margin:4px 0;
+    transition: 0.4s;
+    transform: translate(0,-3px) rotate(135deg);
 }
 
 .settings-body {

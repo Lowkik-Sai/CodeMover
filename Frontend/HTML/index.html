@@ -73,7 +73,13 @@
             <div class="main-container">
                 <div class = "settings-layout">
                     <div class="settings-header">
-                        Settings
+                        <div class="settings-title">
+                            Settings
+                        </div>
+                        <div class="close-settings" onclick="SettingsClose(this)">
+                            <div class="close-1"></div>
+                            <div class="close-2"></div>
+                        </div>
                     </div>
                     <div class="settings-body">
                         <div class="settings-controls">
@@ -145,8 +151,18 @@ function myFunction(x) {
 
 function SettingsFunction(element) {
     let cards = document.querySelector('.cards');
+    let settings = document.querySelector('.settings-layout');
     cards.style.visibility = 'hidden';
+    settings.style.display = 'block';
 }
+
+function SettingsClose(element){
+    let cards = document.querySelector('.cards');
+    let settings = document.querySelector('.settings-layout');
+    settings.style.display = 'none';
+    cards.style.visibility = 'visible';
+}
+
 document.addEventListener('DOMContentLoaded', function () {
     VANTA.NET({
         el: "#vanta-container",

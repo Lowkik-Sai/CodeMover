@@ -161,7 +161,6 @@ document.addEventListener("DOMContentLoaded", async function() {
         }
     });
 
-    // Focus at the start of the textarea
     inputEl.setSelectionRange(0, 0);
 
 
