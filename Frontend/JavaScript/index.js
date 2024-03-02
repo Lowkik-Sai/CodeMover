@@ -233,5 +233,30 @@ saveButton.addEventListener('click', async function(){
     let newEmail = Emaildiv.value;
     let newAccessToken = AccessTokendiv.value;
 
-    
-})
+    let UpdateProfileurl = 'http://127.0.0.1:8080/updateprofile/';
+
+    UpdateProfileurl += sessionStorage.getItem('User_Name');
+
+    const requestBody = JSON.stringify({
+        Email: newEmail,
+        Access_Token: newAccessToken
+    });
+
+    try {
+        const response = await fetch(UpdateProfileurl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: requestBody
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to update profile');
+        }
+
+        console.log('Profile updated successfully');
+    } catch (error) {
+        console.error('Error updating profile:', error);
+    }
+});
