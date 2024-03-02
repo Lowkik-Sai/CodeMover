@@ -15,7 +15,7 @@ const webTokenValidator = require('./Middleware/webTokenValidator');
 const rateLimitCheck = require('./Middleware/rateLimit');
 
 router.use("/", rateLimitCheck, Get_Repo);
-router.use("/restricted", webTokenValidator, Get_Access_Token);
+router.use("/", Get_Access_Token);
 router.use("/", Login);
 router.use("/", Register);
 router.use("/",commit);

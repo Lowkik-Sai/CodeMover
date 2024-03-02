@@ -183,7 +183,6 @@ document.addEventListener("DOMContentLoaded", async function() {
         return response.json();
     })
     .then(data => {
-        // Assign the fetched data to the div element
         console.log(data);
         const divElement = document.querySelector('.circle');
         divElement.textContent = data;
@@ -191,4 +190,48 @@ document.addEventListener("DOMContentLoaded", async function() {
     .catch(error => {
         console.error('Error fetching data from API:', error);
     });
+
+    let Emailfetchurl = 'http://127.0.0.1:8080/getemail/';
+    Emailfetchurl = Emailfetchurl + username;
+    console.log("Email URL: ", Emailfetchurl);
+    fetch(Emailfetchurl)
+    .then(response => {
+        if(!response.ok){
+            throw new Error('Failed to Fetch Email from API');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log("EmailId: ", data);
+        const Emaildiv = document.getElementById('Email');
+        Emaildiv.value = data;
+    })
+
+    let AccessTokenfetchurl = 'http://127.0.0.1:8080/getaccesstoken/';
+    AccessTokenfetchurl += username;
+    console.log("Access Token URL: ", AccessTokenfetchurl);
+    fetch(AccessTokenfetchurl)
+    .then(response => {
+        if(!response.ok){
+            throw new Error('Failed to Fetch Email from API');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log("Access Token: ", data);
+        const AccessTokendiv = document.getElementById('AccessToken');
+        AccessTokendiv.value = data;
+    })
 });
+
+const saveButton = document.getElementById('saveButton');
+
+saveButton.addEventListener('click', async function(){
+    const Emaildiv = document.getElementById('Email');
+    const AccessTokendiv = document.getElementById('AccessToken');
+
+    let newEmail = Emaildiv.value;
+    let newAccessToken = AccessTokendiv.value;
+
+    
+})
