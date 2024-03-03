@@ -99,7 +99,6 @@ document.addEventListener("DOMContentLoaded", async function() {
         if (countOfAns == globalQuestions.length) {              
             console.log("Questions Finished")              
             sendDataToBackend(answersReceived) //Simply for checking for connect frontend to backend!!  
-            console.log("last q " + globalQuestions[countOfQns - 1]);
             if(isEquals(answersReceived[globalQuestions[countOfQns - 1]],"confirm")){
                 code(answersReceived);              
             }           

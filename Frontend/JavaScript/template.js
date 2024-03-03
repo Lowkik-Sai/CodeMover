@@ -47,11 +47,12 @@ async function code(answersReceived){
                 'Access-Control-Allow-Origin': '*'
             }
         });
-        console.log("User Email: ", ownerMail);
+        
         ownerMail = await ownerMail.json();
+        console.log("User Email: ", ownerMail);
 
     let req = {
-        "commitMessage" : `${answersReceived["What's the Problem Difficulty Level?"]}`,
+        "commitMessage" : `Problem Difficulty Level : ${answersReceived["What's the Problem Difficulty Level?"]}`,
         "ownerMail" : ownerMail,
         "content" : `${template}`
     }
