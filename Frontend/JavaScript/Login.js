@@ -60,11 +60,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
             sessionStorage.setItem('JWT_Token', jwtToken);
             sessionStorage.setItem('User_Name', username);
-
-            window.location.href = 'index.html';
+            setTimeout(function(){
+                window.location.href = 'index.html';
+            },200)
         })
         .catch(error => {
             console.error('Error:', error);
         });
     });
+
 });

@@ -1,0 +1,180 @@
+const AWS = require('aws-sdk');
+const hash = require("./hashPwd");
+const otpMail = require('../Templates/otpMail');
+const mail = require('nodemailer');
+
+require("dotenv").config();
+
+AWS.config.update({
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    region: process.env.AWS_REGION
+});
+
+var ddb = new AWS.DynamoDB({ apiVersion: "2012-08-10" });
+const docClient = new AWS.DynamoDB.DocumentClient();
+
+let responseCode = 200;
+let responseBody = "";
+
+
+  
+async function sendOTP(email,otp){
+    var transporter = mail.createTransport({
+        service: 'gmail',
+        auth: {
+          user: 'naganathan1555@gmail.com',
+          pass: 'fffoghzljfpqapll'
+        }
+    });
+
+    let mailOptions;
+    mailOptions = {
+        from : 'naganathan1555@gmail.com',
+        to : 'umaiyalramesh@gmail.com',
+        subject : 'OTP for reset password - Code Mover',
+        html : otpMail(email, otp)
+    }
+    
+    try{
+      transporter.sendMail(mailOptions);
+      console.log("Sent mail successfully")
+    }
+    catch(err){
+      if(err){
+        console.log("Error in sending mail " +err);
+      }
+    }
+
+}
+
+async function otpGenerator(User_Name){
+    try{
+        var parameters = {
+            Key: {
+                "User_Name": {
+                    "S": User_Name
+                }
+            },
+            TableName: "Auth"
+        };
+
+        let email=""
+
+        await ddb.getItem(parameters, (err, data) => {
+            if(err){
+                console.log(err);
+                responseCode = 404;
+                responseBody = "Error in Reading Database";
+                const response = {
+                    responseCode,
+                    responseBody
+                };
+                return response;
+            }
+
+            if(data.Item.User_Name.S === User_Name){
+                email=data.Item.Email.S
+                console.log("Email :"+email)
+            }else{
+                responseCode = 420;
+                responseBody = "No User Exists with Given User Name";
+                const response = {
+                    responseCode,
+                    responseBody
+                };
+                return response;
+            }
+        })
+        
+
+        let digits="0123456789";
+        let otp="";
+        for(let i=0;i<4;i++){
+            otp+=digits[Math.floor(Math.random()*10)];
+        }
+
+        //Send OTP through Mailer
+        sendOTP(email,otp)
+
+
+        const hashedOTP = await hash.create(otp);
+        console.log(`OTP : ${otp} and HashOTP : ${hashedOTP}`)
+
+        const params = {
+            TableName: "Auth",
+            Key: {
+                "User_Name": User_Name
+            },
+            UpdateExpression: "set OTP = :x",
+            ExpressionAttributeValues: {
+                ":x": hashedOTP
+            }    
+        };
+    
+        docClient.update(params, function(err, data) {
+            if(err){
+                responseCode = 100;
+                responseBody = "Error in Updating OTP";
+                return false;
+            }
+            else{
+                responseBody = "Successfully Updated OTP ";
+                responseCode = 200;
+            }
+        });
+    
+
+    }catch(error){
+        responseBody = error;
+        responseCode = 400;
+    }
+    const response = {
+        responseCode,
+        responseBody
+    };
+    
+    return response
+}
+
+const otpModule = async(req) =>{
+    var params = {
+        Key: {
+            "Email": {
+                "S": req.params.email
+            }
+        },
+        TableName: "Auth"
+    };
+
+    await ddb.getItem(params, function(err, data) {
+        if(err){
+            console.log(err);
+            responseCode = 100;
+            responseBody = err;
+        }
+        else{
+            console.log(data+" OTP : "+req.body.otp);
+            if(req.body.otp === data.Item.OTP.S){
+                responseCode=200;
+                responseCode="Successfully Verified"
+            }
+            else{
+                responseCode=404;
+                responseCode="Invalid OTP"
+            }
+        }
+    });
+
+    const response = {
+        responseCode,
+        responseBody
+    };
+
+    return response;
+}
+
+module.exports= {
+    otpModule,
+    otpGenerator
+}
