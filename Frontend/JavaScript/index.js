@@ -167,6 +167,9 @@ document.addEventListener("DOMContentLoaded", async function() {
     let contribution_fetch_url = 'http://127.0.0.1:8080/getcontribution/';
 
     const username = sessionStorage.getItem('User_Name');
+    if(username == ""){
+        window.location.href = 'Login.html';
+    }
     console.log('User_Name: ', username);
 
     const User_Div = document.querySelector('.User-Name');
