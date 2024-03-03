@@ -96,6 +96,18 @@ body {
     font-size: 18px;
 }
 
+.settings-logo {
+    margin-left: 30px;
+    margin-top: 15px;
+    scale: 2.5;
+    transition: transform 0.3 ease;
+    transform-origin: center;
+}
+
+.settings-logo:hover {
+    transform: rotate(180deg);
+    transition: 0.3s;
+}
 
 .help-option {
     display: flex;
