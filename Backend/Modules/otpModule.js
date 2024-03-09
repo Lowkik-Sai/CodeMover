@@ -1,9 +1,16 @@
+require("dotenv").config();
+
 const AWS = require('aws-sdk');
 const hash = require("./hashPwd");
 const otpMail = require('../Templates/otpMail');
 const mail = require('nodemailer');
 
-require("dotenv").config();
+const formData = require('form-data');
+const Mailgun = require('mailgun.js');
+const mailgun = new Mailgun(formData);
+const mg = mailgun.client({username: 'api', key: process.env.MailGun_API});
+
+
 
 AWS.config.update({
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
@@ -20,36 +27,30 @@ let responseBody = "";
 
   
 async function sendOTP(email,otp){
-    var transporter = mail.createTransport({
-        service: 'gmail',
-        auth: {
-          user: 'naganathan1555@gmail.com',
-          pass: 'fffoghzljfpqapll'
-        }
-    });
+    console.log("Email :"+email)
+    mg.messages.create('codemover.me', {
+        from: "Excited User <mailgun@sandbox-123.mailgun.org>",
+        to: email,
+        subject: "OTP",
+        text: `Your OTP is: ${otp}`,
+        html: otpMail(email, otp)
+    })
+    .then(msg => console.log(msg)) // logs response data
+    .catch(err => console.log(err)); // logs any error
 
-    let mailOptions;
-    mailOptions = {
-        from : 'naganathan1555@gmail.com',
-        to : 'umaiyalramesh@gmail.com',
-        subject : 'OTP for reset password - Code Mover',
-        html : otpMail(email, otp)
-    }
-    
-    try{
-      transporter.sendMail(mailOptions);
-      console.log("Sent mail successfully")
-    }
-    catch(err){
-      if(err){
-        console.log("Error in sending mail " +err);
-      }
-    }
+     
 
 }
 
 async function otpGenerator(User_Name){
+    
     try{
+        let digits="0123456789";
+        let otp="";
+        for(let i=0;i<4;i++){
+            otp+=digits[Math.floor(Math.random()*10)];
+        }
+
         var parameters = {
             Key: {
                 "User_Name": {
@@ -58,6 +59,7 @@ async function otpGenerator(User_Name){
             },
             TableName: "Auth"
         };
+
 
         let email=""
 
@@ -75,7 +77,9 @@ async function otpGenerator(User_Name){
 
             if(data.Item.User_Name.S === User_Name){
                 email=data.Item.Email.S
-                console.log("Email :"+email)
+                        
+                sendOTP(email,otp)//Send OTP through Mailer
+                
             }else{
                 responseCode = 420;
                 responseBody = "No User Exists with Given User Name";
@@ -88,14 +92,8 @@ async function otpGenerator(User_Name){
         })
         
 
-        let digits="0123456789";
-        let otp="";
-        for(let i=0;i<4;i++){
-            otp+=digits[Math.floor(Math.random()*10)];
-        }
 
-        //Send OTP through Mailer
-        sendOTP(email,otp)
+
 
 
         const hashedOTP = await hash.create(otp);
@@ -112,7 +110,7 @@ async function otpGenerator(User_Name){
             }    
         };
     
-        docClient.update(params, function(err, data) {
+        await docClient.update(params, function(err, data) {
             if(err){
                 responseCode = 100;
                 responseBody = "Error in Updating OTP";
