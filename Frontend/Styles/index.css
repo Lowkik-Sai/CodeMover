@@ -476,6 +476,14 @@ body {
     padding-left: 50px;
 }
 
+.settings_username {
+    color: wheat;
+    font-family: Raleway, sans-serif;
+    font-size: 30px;
+    padding-left: 80px;
+    padding-bottom: 20px;
+}
+
 .login__field {
     font-family: Raleway, sans-serif;
 	padding: 15px 0px;	

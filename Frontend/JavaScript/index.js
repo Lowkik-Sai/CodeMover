@@ -37,6 +37,13 @@ function isEquals(a, b) {
 
 
 document.addEventListener("DOMContentLoaded", async function() {
+
+    const username = sessionStorage.getItem('User_Name');
+    if(username == null){
+        window.location.href = 'Login.html';
+        return
+    }
+
     let countOfQns = 1;
     const globalQuestions = await Questions();
 
@@ -165,14 +172,12 @@ document.addEventListener("DOMContentLoaded", async function() {
 
     let contribution_fetch_url = 'http://127.0.0.1:8080/getcontribution/';
 
-    const username = sessionStorage.getItem('User_Name');
-    if(username == ""){
-        window.location.href = 'Login.html';
-    }
     console.log('User_Name: ', username);
 
     const User_Div = document.querySelector('.User-Name');
+    const Settings_Div = document.querySelector('.settings_username');
     User_Div.textContent = username;
+    Settings_Div.textContent = username;
 
     contribution_fetch_url = contribution_fetch_url + username;
     console.log(contribution_fetch_url);
