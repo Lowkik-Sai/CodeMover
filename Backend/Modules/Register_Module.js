@@ -18,7 +18,7 @@ let response = {
     responseBody: ""
 };
 
-const Register_Module = async(User_Name, Password, Access_Token) => {
+const Register_Module = async(User_Name, Password, Access_Token, Email_ID) => {
 
     // Check whether given github access token is valid
     try {
@@ -77,7 +77,10 @@ const Register_Module = async(User_Name, Password, Access_Token) => {
         Item: {
             User_Name: { S: User_Name },
             Password: { S: hashedPassword },
-            Access_Token: { S: Access_Token }
+            Access_Token: { S: Access_Token },
+            Email: { S: Email_ID },
+            Total_Contributions: { N: "0" },
+            OTP: { S: "" }
         }
     };
 
