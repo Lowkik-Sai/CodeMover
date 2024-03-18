@@ -43,36 +43,25 @@ const Register_Module = async(User_Name, Password, Access_Token, Email_ID) => {
         return response;
     }
 
-    // Check if already a User exists with given User_Name
-    var params = {
-        Key: {
-            "User_Name": {
-                "S": User_Name
-            }
-        },
-        TableName: "Auth"
-    };
+        // Check if a User already exists with the given User_Name
+        const data = await ddb.getItem({
+            Key: {
+                "User_Name": { "S": User_Name }
+            },
+            TableName: "Auth"
+        }).promise();
 
-    ddb.getItem(params, (err, data) => {
-        if(err){
-            console.log(err);
-            response.responseCode = 404;
-            response.responseBody = "Error in Reading Database";
-            return response;
-        }
-
-        if(data.Item.User_Name.S === User_Name){
+        if (data.Item && data.Item.User_Name.S === User_Name) {
             response.responseCode = 420;
-            response.responseBody = "Already User Exists with Given User Name";
+            response.responseBody = "User already exists with the given User Name";
             return response;
         }
-    })
 
 
     // Insert User Details to DynamoDB
     const hashedPassword = crypto.createHash('sha256').update(Password).digest('hex');
 
-    params = {
+    var params = {
         TableName: "Auth",
         Item: {
             User_Name: { S: User_Name },
@@ -91,9 +80,10 @@ const Register_Module = async(User_Name, Password, Access_Token, Email_ID) => {
             response.responseBody = "Failed to Add User to Database";
         }
         else{
+            response.responseCode = 200;
             response.responseBody = "Successfully Added User to Database";
         }
-    });
+    }).promise();
     return response;
 }
 
