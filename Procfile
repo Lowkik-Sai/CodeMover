@@ -1,1 +1,1 @@
-web gunicorn
+web: nodemon App.js
