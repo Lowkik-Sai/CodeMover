@@ -1,1 +1,1 @@
-worker : sh -c 'cd backend && npm start'
+worker : sh -c 'cd Backend && npm start'
