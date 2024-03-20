@@ -1,1 +1,1 @@
-worker : sh -c 'cd Backend && npm start'
+web: npm start
