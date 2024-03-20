@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - CodeMover</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../Styles/Register.css">
+    <script type="module" src="../JavaScript/Register.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.clouds.min.js"></script>
+</head>
+
+<body>
+    <div class="container" id="container">
+        <div class="screen">
+            <div class="screen__content">
+                <form class="login">
+                    <div class="login__field">
+                        <i class="login__icon fa fa-user"></i>
+                        <input type="text" id="User_Name" class="login__input" placeholder="Github User Name">
+                    </div>
+                    <div class="login__field">
+                        <i class="login__icon fa fa-lock"></i>
+                        <input type="text" id="Email" class="login__input" placeholder="Email ID">
+                    </div>
+                    <div class="login__field">
+                        <i class="login__icon fa fa-lock"></i>
+                        <input type="text" id="Access_Token" class="login__input" placeholder="Github Access Token">
+                    </div>
+                    <div class="login__field">
+                        <i class="login__icon fa fa-lock"></i>
+                        <input type="password" id="Password" class="login__input" placeholder="Password">
+                    </div>
+                    <div class="login__field">
+                        <i class="login__icon fa fa-lock"></i>
+                        <input type="password" id="CPassword" class="login__input" placeholder="Confirm Password">
+                    </div>
+                    <button class="button login__submit">
+                        <span class="button__text">Register</span>
+                        <i class="button__icon fa fa-chevron-right"></i>
+                    </button>				
+                </form>
+            </div>
+            <div class="screen__background">
+                <span class="screen__background__shape screen__background__shape4"></span>
+                <span class="screen__background__shape screen__background__shape3"></span>		
+                <span class="screen__background__shape screen__background__shape2"></span>
+                <span class="screen__background__shape screen__background__shape1"></span>
+            </div>		
+        </div>
+    </div>
+
+    <div id="error">
+        <div class="content">
+
+        </div>
+        <div class="error-border">
+            Border
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.waves.min.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        VANTA.WAVES({
+            el: "#container",
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200.00,
+            minWidth: 200.00,
+            scale: 1.00,
+            scaleMobile: 1.00,
+            color: 0x0,
+            shininess: 66.00
+        })
+    });
+    </script>
+</body>
+</html>

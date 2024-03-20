@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeMover</title>
+    <link rel="stylesheet" href="../Styles/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script type="module" src="../JavaScript/index.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
+    <script>
+        VANTA.NET({
+        el: "#vanta-container",
+        mouseControls: true,
+        touchControls: true,
+        gyroControls: false,
+        minHeight: window.innerHeight,
+        minWidth: window.innerWidth,
+        scale: 1.00,
+        scaleMobile: 1.00,
+        color: 0x3fbbff,
+        backgroundColor: 0x0
+        })
+    </script>
+</head>
+<body id="vanta-container">
+    <div class="navbar-container">
+        <div class="navbar">
+            <h3>
+                CodeMover
+            </h3>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="leftbar">
+            <div class="profile"  onclick="myFunction()">
+                <div class="User-Name">
+                    UserName
+                </div>
+                <div class="menu-container">
+                    <div class="bar1"></div>
+                    <div class="bar2"></div>
+                    <div class="bar3"></div>
+                </div>
+            </div>
+            <div class="dropdown-menu">
+                <div class="settings-container" onclick="SettingsFunction(this)">
+                    <div class="settings">
+                        Settings 
+                    </div>
+                    <div class="settings-logo">
+                        <i class="fa fa-cog" aria-hidden="true"></i>
+                    </div>
+                </div>
+                <div class="help-option" onclick="HelpFunction(this)">
+                    <div class="help">
+                        Help
+                    </div>
+                    <div>
+
+                    </div>
+                </div>
+                <div class="logout" onclick="Logout(this)">
+                    Logout
+                </div>
+            </div>
+            <div class="contribution-container">
+                <div class="circle">
+                    <div class="loading" style="display: none;">
+                        <img src="loading.gif" alt="Loading..." />
+                    </div>                    
+                </div>
+                <div class="Total_Contributions">
+                    <p>Total Contributions</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="main">
+            <div class="main-container">
+                <div class = "settings-layout">
+                    <div class="settings-header">
+                        <div class="settings-title">
+                            Settings
+                        </div>
+                        <div class="close-settings" onclick="SettingsClose(this)">
+                            <div class="close-1"></div>
+                            <div class="close-2"></div>
+                        </div>
+                    </div>
+                    <div class="settings-body">
+                        <div class="settings-controls">
+                            <form class="login">
+                                <div class="settings_username">
+                                    User Name
+                                </div>
+                                <div class="login__field">
+                                    <i class="login__icon fa fa-user"></i>
+                                    <input type="text" class="login__input" id="Email" placeholder="Email Id">
+                                </div>
+                                <div class="login__field">
+                                    <i class="login__icon fa fa-lock"></i>
+                                    <input type="text" class="login__input"  id = "AccessToken" placeholder="Github Access Token">
+                                </div>
+                                <button class="button login__submit" id="saveButton">
+                                    <span class="button__text">Save</span>
+                                    <i class="button__icon fa fa-chevron-right"></i>
+                                </button>				
+                            </form>
+                        </div>
+                        <div class="settings-image">
+                            <img src="../Images/user-png-33856.png" alt="" style="height: 190px; width: 190px;">
+                        </div>
+                    </div>
+                </div>
+                <div class="help-container">
+                    <div class="help-header">
+                        <div class="help-title">
+                            Help
+                        </div>
+                        <div class="close-help" onclick="HelpClose(this)">
+                            <div class="close-1"></div>
+                            <div class="close-2"></div>
+                        </div>
+                    </div>
+                    <div class="help-body">
+                        <p>Our interactive chatbot helps you commit code by answering questions. Here's how to navigate the process:</p>
+                        <ul>
+                            <li><strong>Proceed:</strong> Answer questions as prompted by the chatbot.</li>
+                            <li><strong>Go Back:</strong> Type <code>PREVIOUS</code> to correct an answer by revisiting the previous question.</li>
+                            <li><strong>Exit Anytime:</strong> Enter <code>TERMINATE</code> to stop the process immediately, without making any commits.</li>
+                            <li><strong>Finalize:</strong> Confirm your final submission by entring <code>CONFIRM</code></li>
+                            <li><strong>Support:</strong> For assistance or suggestions, contact our support team at <a href="mailto:lowkiksaipotnuru@gmail.com" style="color: white;">CodeMover User Support</a>.</li>
+                        </ul>
+                        <div class="help-header" style="margin-top: 30px; font-size: 25px; align-items: center; padding-left: 140px; color: black; margin-bottom: 15px;">
+                            Generate Github Access Token
+                        </div>
+                        <div class="step">
+                            <p><div class="point-circle"></div> Go to Github and Verify your email address if it hasn't been verified.</p>
+                        </div>
+                        <div class="step">
+                            <p><div class="point-circle"></div> Navigate to your profile photo in the upper-right corner of any GitHub page and click on it, then select "Settings".</p>
+                        </div>
+                        <div class="step">
+                            <p><div class="point-circle"></div> In the left sidebar, click "Developer settings".</p>
+                        </div>
+                        <div class="step">
+                            <p><div class="point-circle"></div> Under "Personal access tokens" in the left sidebar, click "Fine-grained tokens".</p>
+                        </div>
+                        <div class="step">
+                            <p><div class="point-circle"></div> Click "Generate new token".</p>
+                        </div>
+                        <div class="step">
+                            <p><div class="point-circle"></div> Fill in the token details such as "Token name", "Expiration", optionally a "Description", and select the "Resource owner".</p>
+                        </div>
+                        <div class="step">
+                            <p><div class="point-circle"></div> Select the repositories the token will access under "Repository access" and choose the necessary permissions under "Permissions".</p>
+                        </div>
+                        <div class="step">
+                            <p><div class="point-circle"></div> Click "Generate token" to create your new fine-grained personal access token.</p>
+                        </div>
+                        <p>Remember to choose the minimal repository access and permissions necessary for your needs.</p>
+                    </div>
+                </div>
+                <div class="cards">
+                    <div class="card-header">
+                        <h2>Chat Bot</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="chat chat-bot">
+                            <span class="user-icon"><i class='fa fa-robot'></i></span>
+                            <p>Welcome to CodeMover</p>
+                        </div>
+                        <div class="chat chat-bot">
+                            <span class="user-icon"><i class='fa fa-robot'></i></span>
+                            <p>What's the Data Structure Utilized by the Solution?</p>
+                        </div>
+                        
+                    </div>
+                    <div class="card-footer">
+                        <textarea name="message" class="input-chat" cols="1" rows="1" placeholder="Ask me!" autofocus></textarea>
+                        <div class="sending-icon">
+                            <i class="fa-regular fa-paper-plane"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.waves.min.js"></script>
+<script>
+function myFunction() {
+    let x = document.querySelector('.menu-container');
+    x.classList.toggle("change");
+    let dropdown = document.querySelector('.dropdown-menu');
+    let topbar = document.querySelector('.profile')
+    if(x.classList.contains("change")){
+        dropdown.style.visibility = 'visible';
+        topbar.style.borderRadius = '20px 20px 0px 0px';
+    }
+    else{
+        dropdown.style.visibility = 'hidden';
+        topbar.style.borderRadius = '20px';
+    }
+}
+
+function SettingsFunction(element) {
+    let cards = document.querySelector('.cards');
+    let settings = document.querySelector('.settings-layout');
+    let help = document.querySelector('.help-container');
+    cards.style.visibility = 'hidden';
+    help.style.display = 'none';
+    settings.style.display = 'block';
+}
+
+function SettingsClose(element){
+    let cards = document.querySelector('.cards');
+    let settings = document.querySelector('.settings-layout');
+    settings.style.display = 'none';
+    cards.style.visibility = 'visible';
+}
+
+function Logout(element){
+    sessionStorage.clear();
+    window.location.href = 'Login.html';
+}
+
+function HelpFunction(element){
+    let cards = document.querySelector('.cards');
+    let settings = document.querySelector('.settings-layout');
+    let help = document.querySelector('.help-container');
+    cards.style.visibility = 'hidden';
+    settings.style.display = 'none';
+    help.style.display = 'block';
+}
+
+function HelpClose(element){
+    let cards = document.querySelector('.cards');
+    let settings = document.querySelector('.settings-layout');
+    let help = document.querySelector('.help-container');
+    help.style.display = 'none';
+    if(settings.style.display == 'block'){
+        cards.style.visibility = 'hidden';
+    }
+    else{
+        cards.style.visibility = 'visible';
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    VANTA.NET({
+        el: "#vanta-container",
+        mouseControls: true,
+        touchControls: true,
+        gyroControls: false,
+        minHeight: window.innerHeight,
+        minWidth: window.innerWidth,
+        scale: 1.00,
+        scaleMobile: 1.00,
+        color: 0x3fbbff,
+        backgroundColor: 0x0
+    });
+});
+</script>
+</body>
+</html>
