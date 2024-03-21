@@ -7,9 +7,9 @@ app.use(express.json());
 app.use(cors());
 require('dotenv').config();
 
-app.use("/",mainRouter);
+// app.use("/",mainRouter);
 
-app.get("/test", (req, res) => {
+app.get("/", (req, res) => {
     res.send("Hello World from Code-Mover");
 })
 
