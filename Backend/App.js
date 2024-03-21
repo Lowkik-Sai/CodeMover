@@ -10,7 +10,7 @@ require('dotenv').config();
 app.use("/",mainRouter);
 
 app.get("/test", (req, res) => {
-    res.status(200).json({message: "Hello World from Code-Mover"});
+    res.send("Hello World from Code-Mover");
 })
 
 const port = process.env.SERVER_PORT || 5000;
