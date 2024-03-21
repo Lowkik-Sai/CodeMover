@@ -1,1 +1,1 @@
-<?php include("../HTML/Login.html"); ?>
+<?php include_once("/HTML/Login.html"); ?>
