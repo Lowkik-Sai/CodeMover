@@ -40,7 +40,7 @@ async function code(answersReceived){
     console.log(template);
 
     try {
-        let ownerMail = await fetch(`http://127.0.0.1:8080/getemail/${owner}`, {
+        let ownerMail = await fetch(`https://codemover-backend-73adc6530796.herokuapp.com/getemail/${owner}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -58,7 +58,7 @@ async function code(answersReceived){
     }
     console.log(`Repo name : ${repo} and Qn name : ${title}`)
 
-        const response = await fetch(`http://localhost:8080/commitCode/${owner}/${repo}/${dataStructure}/${title}`, {
+        const response = await fetch(`https://codemover-backend-73adc6530796.herokuapp.com/commitCode/${owner}/${repo}/${dataStructure}/${title}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
