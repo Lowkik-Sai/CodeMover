@@ -4,7 +4,7 @@ import { Questions } from "./Questionnaire.js";
 
 
 function sendDataToBackend(data) {
-    fetch('http://localhost:8080/api/getAnswers', {
+    fetch('https://codemover-backend-73adc6530796.herokuapp.com/api/getAnswers', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -105,7 +105,7 @@ document.addEventListener("DOMContentLoaded", async function() {
     // Focus at the start of the textarea
     inputEl.setSelectionRange(0, 0);
 
-    fetch('http://127.0.0.1:8080/getcontribution/Naganathan05')
+    fetch('https://codemover-backend-73adc6530796.herokuapp.com/getcontribution/Naganathan05')
     .then(response => {
         if (!response.ok) {
             throw new Error('Failed to fetch data from API');
