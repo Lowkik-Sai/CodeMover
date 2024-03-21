@@ -52,6 +52,7 @@ const Register_Module = async(User_Name, Password, Access_Token, Email_ID) => {
         }).promise();
 
         if (data.Item && data.Item.User_Name.S === User_Name) {
+            console.log(data.Item);
             response.responseCode = 420;
             response.responseBody = "User already exists with the given User Name";
             return response;
@@ -82,6 +83,7 @@ const Register_Module = async(User_Name, Password, Access_Token, Email_ID) => {
         else{
             response.responseCode = 200;
             response.responseBody = "Successfully Added User to Database";
+            return response;
         }
     }).promise();
     return response;
