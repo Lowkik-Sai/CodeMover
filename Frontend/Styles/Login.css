@@ -159,14 +159,14 @@ body {
 	bottom: 0px;
 	right: 0px;
 	color: #000000;
-	padding-top: 20px;
+	padding-top: 5px;
 }
 
 .social-login a {
 	color: black;
 	font-size: 18px;
+	padding: 7px;
 }
-
 
 #error {
 	font-family: Raleway, sans-serif;

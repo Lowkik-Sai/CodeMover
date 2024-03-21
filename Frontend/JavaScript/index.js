@@ -5,7 +5,7 @@ import { code } from "./template.js";
 
 //Testing from frontend to backend
 function sendDataToBackend(data) {
-    fetch('http://localhost:8080/api/getAnswers', {
+    fetch('https://codemover-backend-73adc6530796.herokuapp.com/api/getAnswers', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -170,7 +170,7 @@ document.addEventListener("DOMContentLoaded", async function() {
     inputEl.setSelectionRange(0, 0);
 
 
-    let contribution_fetch_url = 'http://127.0.0.1:8080/getcontribution/';
+    let contribution_fetch_url = 'https://codemover-backend-73adc6530796.herokuapp.com/getcontribution/';
 
     console.log('User_Name: ', username);
 
@@ -197,7 +197,7 @@ document.addEventListener("DOMContentLoaded", async function() {
         console.error('Error fetching data from API:', error);
     });
 
-    let Emailfetchurl = 'http://127.0.0.1:8080/getemail/';
+    let Emailfetchurl = 'https://codemover-backend-73adc6530796.herokuapp.com/getemail/';
     Emailfetchurl = Emailfetchurl + username;
     console.log("Email URL: ", Emailfetchurl);
     fetch(Emailfetchurl)
@@ -213,7 +213,7 @@ document.addEventListener("DOMContentLoaded", async function() {
         Emaildiv.value = data;
     })
 
-    let AccessTokenfetchurl = 'http://127.0.0.1:8080/getaccesstoken/';
+    let AccessTokenfetchurl = 'https://codemover-backend-73adc6530796.herokuapp.com/getaccesstoken/';
     AccessTokenfetchurl += username;
     console.log("Access Token URL: ", AccessTokenfetchurl);
     fetch(AccessTokenfetchurl)
@@ -239,7 +239,7 @@ saveButton.addEventListener('click', async function(){
     let newEmail = Emaildiv.value;
     let newAccessToken = AccessTokendiv.value;
 
-    let UpdateProfileurl = 'http://127.0.0.1:8080/updateprofile/';
+    let UpdateProfileurl = 'https://codemover-backend-73adc6530796.herokuapp.com/updateprofile/';
 
     UpdateProfileurl += sessionStorage.getItem('User_Name');
 

@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log(username);
         console.log(password)
 
-        fetch('http://127.0.0.1:8080/login', {
+        fetch('https://codemover-backend-73adc6530796.herokuapp.com/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

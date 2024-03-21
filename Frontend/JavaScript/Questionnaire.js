@@ -1,6 +1,6 @@
 async function getRepos() {
     try {
-        const response = await fetch('http://localhost:8080/getrepos', {
+        const response = await fetch('https://codemover-backend-73adc6530796.herokuapp.com/getrepos', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
