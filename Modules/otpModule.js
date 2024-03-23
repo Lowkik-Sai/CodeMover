@@ -74,7 +74,7 @@ async function otpGenerator(User_Name){
                 };
                 return response;
             }
-
+            console.log(data)
             if(data.Item.User_Name.S === User_Name){
                 email=data.Item.Email.S
                         
@@ -138,29 +138,36 @@ async function otpGenerator(User_Name){
 const otpModule = async(req) =>{
     var params = {
         Key: {
-            "Email": {
-                "S": req.params.email
+            "User_Name": {
+                "S": req.params.User_Name
             }
         },
         TableName: "Auth"
     };
 
-    await ddb.getItem(params, function(err, data) {
+    await ddb.getItem(params, async function(err, data) {
         if(err){
             console.log(err);
-            responseCode = 100;
-            responseBody = err;
+            responseCode = 404;
+            responseBody = "Error in Reading Database";
+            const response = {
+                responseCode,
+                responseBody
+            };
+            return response;
         }
         else{
-            console.log(data+" OTP : "+req.body.otp);
-            if(req.body.otp === data.Item.OTP.S){
+            console.log(data.Item.OTP.S+" OTP : "+req.body.otp);
+            const isMatch = await hash.verify(data.Item.OTP.S,req.body.otp);
+            if(isMatch){
                 responseCode=200;
-                responseCode="Successfully Verified"
+                responseBody="Successfully Verified"
             }
             else{
                 responseCode=404;
-                responseCode="Invalid OTP"
+                responseBody="Invalid OTP"
             }
+            console.log(responseBody)
         }
     });
 

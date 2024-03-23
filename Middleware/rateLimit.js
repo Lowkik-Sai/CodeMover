@@ -1,7 +1,9 @@
 const {Octokit} = require("@octokit/core")
+const fetch = require('node-fetch-commonjs')
 require("dotenv").config()
 
 const octokit = new Octokit({
+    request: { fetch },
     auth : process.env.gitToken
 })
 
