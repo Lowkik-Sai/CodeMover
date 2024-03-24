@@ -22,7 +22,7 @@ var ddb = new AWS.DynamoDB({ apiVersion: "2012-08-10" });
 const docClient = new AWS.DynamoDB.DocumentClient();
 
 let responseCode = 100;
-let responseBody = "Invalid User Name";
+let responseBody = "Something went wrong";
 let userName = "";
 
 
@@ -121,38 +121,22 @@ const otpModule = async(req) =>{
         },
         TableName: "Auth"
     };
-    
-    await ddb.getItem(params, async function(err, data) {
-        if(err){
-            console.log(err);
-            responseCode = 404;
-            responseBody = "Error in Reading Database";
-            const response = {
-                responseCode,
-                responseBody
-            };
-            return response;
-        }
-        else{
-            console.log(data.Item.OTP.S+" OTP : "+req.body.otp);
-            const isMatch = await hash.verify(data.Item.OTP.S,req.body.otp);
-            if(isMatch){
-                responseCode=200;
-                responseBody="Successfully Verified"
-            }
-            else{
-                responseCode=404;
-                responseBody="Invalid OTP"
-            }
-            console.log(responseBody)
-        }
-    });
-
+    const data = await ddb.getItem(params).promise();
+    console.log(data.Item.OTP.S+" OTP : "+req.body.otp);
+    const isMatch = await hash.verify(data.Item.OTP.S,req.body.otp);
+    if(isMatch){
+        responseCode=200;
+        responseBody="Successfully Verified"
+    }
+    else{
+        responseCode=404;
+        responseBody="Invalid OTP"
+    }
     const response = {
         responseCode,
         responseBody
     };
-
+        
     return response;
 }
 
