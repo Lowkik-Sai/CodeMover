@@ -1,23 +1,39 @@
 const {otpModule,otpGenerator} = require("../Modules/otpModule");
 
 const otpController={
-    otpGenerate:async(req,res)=>{
-        const otpGenerate=await otpGenerator(req.params.User_Name);
-        if(otpGenerate.responseCode==200){
-            res.status(200).json(otpGenerate.responseBody)
-        }else{
-            //Email not exists or OTP sending failed
-            res.status(404).json(otpGenerate.responseBody)
+    otpGenerate: async (req, res) => {
+        try {
+            const otpGenerateResponse = await otpGenerator(req.params.User_Name);
+            console.log("OTP Generate Response :", otpGenerateResponse);
+
+            if (otpGenerateResponse.responseCode === 200) {
+                res.status(200).json(otpGenerateResponse);
+            } else {
+                res.status(404).json(otpGenerateResponse);
+            }
+        } 
+        catch (error) {
+            console.error(error);
+            res.status(500).json({ responseBody: "Internal Server Error" });
         }
     },
     otpVerify:async(req,res)=>{
-        const otpResponse = await otpModule(req)
-        if(otpResponse.responseCode == 200){
-            res.status(200).json(otpResponse.responseBody);
+        try {
+            const otpResponse = await otpModule(req)
+            console.log("OTP Verify Response :", otpResponse);
+
+            if(otpResponse.responseCode == 200){
+                res.status(200).json(otpResponse);
+            }
+            else{
+                res.status(100).json(otpResponse);
+            }
+        } 
+        catch (error) {
+            console.error(error);
+            res.status(500).json({ responseBody: "Internal Server Error" });
         }
-        else{
-            res.status(100).json(otpResponse.responseBody);
-        }
+        
     }
 }
 

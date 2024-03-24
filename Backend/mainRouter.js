@@ -10,7 +10,7 @@ const Update_Profile = require('./Routers/Update_Profile_Router');
 const Login = require('./Routers/Login_Router');
 const Register = require('./Routers/Register_Router');
 const commit = require('./Routers/Commit_Route');
-const otp = require("./Routers/otpRoute")
+const otp = require("./Routers/otpRoute");
 
 //Middlewares
 const webTokenValidator = require('./Middleware/webTokenValidator');
