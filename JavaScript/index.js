@@ -239,7 +239,7 @@ saveButton.addEventListener('click', async function(){
     let newEmail = Emaildiv.value;
     let newAccessToken = AccessTokendiv.value;
 
-    let UpdateProfileurl = 'https://codemover-backend-73adc6530796.herokuapp.com/updateprofile/';
+    let UpdateProfileurl = 'https://codemover-backend-73adc6530796.herokuapp.com/updateprofile/profile';
 
     UpdateProfileurl += sessionStorage.getItem('User_Name');
 

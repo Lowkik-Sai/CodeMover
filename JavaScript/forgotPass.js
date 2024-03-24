@@ -1,32 +1,66 @@
-document.addEventListener("DOMContentLoaded",function(){
+document.addEventListener('DOMContentLoaded', function () {
+
     const form = document.querySelector('.login');
 
-    const sendOTP = form.querySelector('.login__submit');
+    const sendOtp = form.querySelector('.login__submit');
 
 
-    sendOTP.addEventListener("click",function(event){
+    sendOtp.addEventListener('click', function (event) {
         event.preventDefault();
-        const value = document.querySelector('.login__input[type="text"]').value;
 
-        if(value.endsWith(".com")){ 
-            //Method : Email 
+        const username = document.querySelector('.login__input[type="text"]').value;
 
-            let data = {
-                "eMail" : value
-            }
+        if (!username.trim()) {
             var x = document.getElementById("error");
             x.className = "show";
-            if(data == ""){
-                x.innerText = "Invalid Email";
-            }
-            else{
-                x.innerText = errorData.message;
-            }
+            x.innerText = "Enter User Name";
             setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
-
+            return;
         }
-            //Method : Username
+        
+        const data = {
+            User_Name: username
+        };
+        
+        console.log(username);
+        fetch(`https://codemover-backend-73adc6530796.herokuapp.com/otp/generate/${data.User_Name}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(errorData => {
+                    console.log(errorData.responseBody);
+                    var x = document.getElementById("error");
+                    x.className = "show";
+                    x.innerText = errorData.responseBody;
+                    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+                });
+            }
+            console.log("Response in forgotPass:")
+            console.log(response);
+            return response.json();
+        })
+        .then(data => {
+            console.log(data);
 
+            const username = data.userName;
 
-    })
-})
+            var x = document.getElementById("error");
+            x.className = "show";
+            x.innerText = "Redirecting to OTP page...";
+            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 1000);
+
+            sessionStorage.setItem('User_Name', username);
+            setTimeout(function(){
+                window.location.href = 'otp.html';
+            },200)
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
+
+});
