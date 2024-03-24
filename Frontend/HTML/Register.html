@@ -19,23 +19,24 @@
                 <form class="login">
                     <div class="login__field">
                         <i class="login__icon fa fa-user"></i>
-                        <input type="text" id="User_Name" class="login__input" placeholder="Github User Name">
+                        <input type="text" id="User_Name" class="login__input" placeholder="Github User Name" required>
                     </div>
                     <div class="login__field">
                         <i class="login__icon fa fa-lock"></i>
-                        <input type="text" id="Email" class="login__input" placeholder="Email ID">
+                        <input type="text" id="Email" class="login__input" placeholder="Email ID" required>
                     </div>
                     <div class="login__field">
                         <i class="login__icon fa fa-lock"></i>
-                        <input type="text" id="Access_Token" class="login__input" placeholder="Github Access Token">
+                        <input type="text" id="Access_Token" class="login__input" placeholder="Github Access Token" required>
+                        <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token" target="_blank"><i id = "info-icon" class="login__icon fa fa-info-circle" style="color: black; font-size: 30px; padding-bottom: 80px; padding-left: 10px;"></i></a>
                     </div>
                     <div class="login__field">
                         <i class="login__icon fa fa-lock"></i>
-                        <input type="password" id="Password" class="login__input" placeholder="Password">
+                        <input type="password" id="Password" class="login__input" placeholder="Password" required>
                     </div>
                     <div class="login__field">
                         <i class="login__icon fa fa-lock"></i>
-                        <input type="password" id="CPassword" class="login__input" placeholder="Confirm Password">
+                        <input type="password" id="CPassword" class="login__input" placeholder="Confirm Password" required>
                     </div>
                     <button class="button login__submit">
                         <span class="button__text">Register</span>
