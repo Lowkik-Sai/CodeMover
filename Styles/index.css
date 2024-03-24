@@ -744,11 +744,10 @@ body {
 }
 
 .dev-social {
-    display: flex;
+    display: block;
     padding: 10px;
     height: 120px;
     border-radius: 15px 15px 15px 15px;
-    padding-top: 50px;
     background-color: #445664;
 }
 
@@ -759,9 +758,26 @@ body {
 .dev-image img {
     height: 190px;
     width: 200px;
+    border: 3px solid #17202a;
     border-radius: 90px;
     margin-top: 20px;
     margin-left: 25px;
+}
+
+.dev-image img:hover {
+    scale: 1.1;
+    border: 3px solid #17202a;
+    box-shadow: 0px 0px 24px #a2d3f1;
+    transition: 0.2s;
+}
+
+.dev-name {
+    font-family: "Poppins", sans-serif;
+    height: 20px;
+    margin-top: 5px;
+    color: #b9e0fa;
+    padding-left: 25px;
+    font-size: 22px;
 }
 
 .copyright {
@@ -773,6 +789,10 @@ body {
     width: 100%;
 }
 
+.dev-social-icon {
+    margin-top: 24px;
+    display: flex;
+}
 
 
 
