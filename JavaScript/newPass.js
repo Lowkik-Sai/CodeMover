@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function () {
             x.innerText = "Successfully Changed Password";
             setTimeout(function(){ x.className = x.className.replace("show", ""); }, 1000);
             setTimeout(function(){
-                window.location.href = 'login.html';
+                window.location.href = 'Login.html';
             },200)
         })
         .catch(error => {
