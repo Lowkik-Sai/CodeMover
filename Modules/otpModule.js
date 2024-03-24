@@ -21,8 +21,9 @@ AWS.config.update({
 var ddb = new AWS.DynamoDB({ apiVersion: "2012-08-10" });
 const docClient = new AWS.DynamoDB.DocumentClient();
 
-let responseCode = 200;
-let responseBody = "";
+let responseCode = 100;
+let responseBody = "Invalid User Name";
+let userName = "";
 
 
   
@@ -37,8 +38,6 @@ async function sendOTP(email,otp){
     })
     .then(msg => console.log(msg)) // logs response data
     .catch(err => console.log(err)); // logs any error
-
-     
 
 }
 
@@ -63,41 +62,22 @@ async function otpGenerator(User_Name){
 
         let email=""
 
-        await ddb.getItem(parameters, (err, data) => {
-            if(err){
-                console.log(err);
-                responseCode = 404;
-                responseBody = "Error in Reading Database";
-                const response = {
-                    responseCode,
-                    responseBody
-                };
-                return response;
-            }
-            console.log(data)
-            if(data.Item.User_Name.S === User_Name){
-                email=data.Item.Email.S
-                        
-                sendOTP(email,otp)//Send OTP through Mailer
-                
-            }else{
-                responseCode = 420;
-                responseBody = "No User Exists with Given User Name";
-                const response = {
-                    responseCode,
-                    responseBody
-                };
-                return response;
-            }
-        })
+        const data = await ddb.getItem(parameters).promise();
         
+        if (!data.Item || !data.Item.Email) {
+            
+            return {
+                userName: User_Name,
+                responseCode: 404,
+                responseBody: "No User Exists with Given User Name"
+            };
+        }
 
-
-
-
+        email = data.Item.Email.S;
+        sendOTP(email, otp); // Send OTP through Mailer
 
         const hashedOTP = await hash.create(otp);
-        console.log(`OTP : ${otp} and HashOTP : ${hashedOTP}`)
+        console.log(`OTP : ${otp} and HashOTP : ${hashedOTP}`);
 
         const params = {
             TableName: "Auth",
@@ -107,20 +87,16 @@ async function otpGenerator(User_Name){
             UpdateExpression: "set OTP = :x",
             ExpressionAttributeValues: {
                 ":x": hashedOTP
-            }    
+            }
         };
-    
-        await docClient.update(params, function(err, data) {
-            if(err){
-                responseCode = 100;
-                responseBody = "Error in Updating OTP";
-                return false;
-            }
-            else{
-                responseBody = "Successfully Updated OTP ";
-                responseCode = 200;
-            }
-        });
+
+        await docClient.update(params).promise();
+
+        return {
+            userName: User_Name,
+            responseCode: 200,
+            responseBody: "Successfully Updated OTP"
+        };
     
 
     }catch(error){
@@ -128,6 +104,7 @@ async function otpGenerator(User_Name){
         responseCode = 400;
     }
     const response = {
+        userName,
         responseCode,
         responseBody
     };
@@ -144,7 +121,7 @@ const otpModule = async(req) =>{
         },
         TableName: "Auth"
     };
-
+    
     await ddb.getItem(params, async function(err, data) {
         if(err){
             console.log(err);
