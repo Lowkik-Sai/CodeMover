@@ -17,7 +17,7 @@ async function code(answersReceived){
         commentStarting = "\"\"\"";
         commentEnding   = "\"\"\"";
         title += ".py";
-    }else if(langName=="CPP" || langName=="JAVA" || langName==cpp || langName == c++){
+    }else if(langName=="CPP" || langName=="JAVA" || langName=="cpp" || langName == "c++"){
         commentStarting = "\/\*";
         commentEnding   = "\*\/";
         if(langName =="CPP" || langName=="cpp"||langName=="c++"){
