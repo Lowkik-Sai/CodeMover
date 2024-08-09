@@ -16,9 +16,15 @@ async function code(answersReceived){
     if(langName=="Python" || langName=="python" || langName =="PYTHON"){
         commentStarting = "\"\"\"";
         commentEnding   = "\"\"\"";
-    }else if(langName=="CPP" || langName=="JAVA" || langName=="JAVASCRIPT"){
+        title += ".py";
+    }else if(langName=="CPP" || langName=="JAVA" || langName==cpp || langName == c++){
         commentStarting = "\/\*";
         commentEnding   = "\*\/";
+        if(langName =="CPP" || langName=="cpp"||langName=="c++"){
+            title += ".cpp";
+        }else{
+            title += ".java";
+        }
     }
 
     let template=`
@@ -28,7 +34,7 @@ async function code(answersReceived){
     ${commentEnding}
 
 
-    ${answersReceived["Please Provide the Code for the Solution"]}
+${answersReceived["Please Provide the Code for the Solution"]}
 
 
     ${commentStarting}
