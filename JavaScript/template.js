@@ -13,18 +13,20 @@ async function code(answersReceived){
     
     let commentStarting = "\"\"\"";
     let commentEnding   = "\"\"\"";
-    if(langName=="Python" || langName=="python" || langName =="PYTHON"){
+    if (langName.toLowerCase() === "python") {
         commentStarting = "\"\"\"";
-        commentEnding   = "\"\"\"";
+        commentEnding = "\"\"\"";
         title += ".py";
-    }else if(langName=="CPP" || langName=="JAVA" || langName=="cpp" || langName == "c++"){
-        commentStarting = "\/\*";
-        commentEnding   = "\*\/";
-        if(langName =="CPP" || langName=="cpp"||langName=="c++"){
-            title += ".cpp";
-        }else{
-            title += ".java";
-        }
+    } else if (langName.toLowerCase() === "cpp" || langName.toLowerCase() === "c++") {
+        commentStarting = "\/*";
+        commentEnding = "*\/";
+        title += ".cpp";
+    } else if (langName.toLowerCase() === "java") {
+        commentStarting = "\/*";
+        commentEnding = "*\/";
+        title += ".java";
+    } else {
+        title += ".txt";
     }
 
     let template=`
