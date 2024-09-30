@@ -1,10 +1,6 @@
 const { Octokit } = require("@octokit/core");
 require('dotenv').config();
 
-const octokit = new Octokit({
-    auth: process.env.gitToken
-})
-
 const AWS = require('aws-sdk');
 
 
@@ -16,9 +12,14 @@ let responseCode = 200;
 let responseMessage = "Undefined";
 
 const commitCodeModule = {
-    commitCode: async (owner, ownerMail, repo, path, commitMessage, content) => {
+    commitCode: async (owner, ownerMail, repo, path, commitMessage, content, Access_Token) => {
+        // console.log("Access Token at Commit Module: ", Access_Token);
         try {
             const fileContent = Buffer.from(content).toString('base64');
+
+            const octokit = new Octokit({
+                auth: Access_Token
+            })
 
             const { data: { sha } } = await octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
                 owner,
@@ -55,7 +56,7 @@ const commitCodeModule = {
 
             const updatedContributions = await ddb.updateItem(params).promise();
             console.log("Updated total contributions:", updatedContributions);
-
+            responseCode = 200;
             responseMessage = "Alright!";
         } catch (error) {
             console.log(error);
