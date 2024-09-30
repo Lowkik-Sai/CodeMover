@@ -1,16 +1,17 @@
-export async function getRepos() {
+export async function getRepos(accessToken) {
     try {
-        const response = await fetch('https://codemover-backend-73adc6530796.herokuapp.com/getrepos', {
+        const response = await fetch(`https://codemover-backend-73adc6530796.herokuapp.com/getrepos?Access_Token=${accessToken}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
             },
         });
+        
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
         const responseData = await response.json();
-        console.log('Repos List :', responseData);
+        // console.log('Repos List :', responseData);
         return responseData;
     } catch (error) {
         console.error('Error sending data to backend:', error);
