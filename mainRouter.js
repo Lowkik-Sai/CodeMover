@@ -16,7 +16,7 @@ const otp = require("./Routers/otpRoute");
 const webTokenValidator = require('./Middleware/webTokenValidator');
 const rateLimitCheck = require('./Middleware/rateLimit');
 
-router.use("/", rateLimitCheck, Get_Repo);
+router.use("/", Get_Repo);
 router.use("/", Get_Access_Token);
 router.use("/", Login);
 router.use("/", Register);
