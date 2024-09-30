@@ -1,27 +1,50 @@
-async function getRepos() {
+//
+
+async function getRepos(accessToken) {
     try {
-        const response = await fetch('https://codemover-backend-73adc6530796.herokuapp.com/getrepos', {
+        const Url = `https://codemover-backend-73adc6530796.herokuapp.com/getrepos?Access_Token=${accessToken}`;
+        const response = await fetch(Url, {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json',
-            },
+                'Content-Type': 'application/json'
+                // 'Access-Control-Allow-Origin' removed, not needed in request headers
+            }
         });
+
         if (!response.ok) {
-            throw new Error('Network response was not ok');
+            throw new Error('Failed to fetch data from API');
         }
-        const responseData = await response.json();
-        console.log('Repos List :', responseData);
-        return responseData;
+
+        const data = await response.json();
+        return data;
     } catch (error) {
-        console.error('Error sending data to backend:', error);
+        console.error('Error fetching data from API:', error);
     }
 }
 
+
 const userRepos = async function() {
-    const repos = await getRepos();
-    const reposFormatted = repos.map(repo => `${repo}\n`).join('');
+    const username = sessionStorage.getItem('User_Name');
+    console.log("Questionare User_Name: ", username);
+
+    // Fetch the access token from the backend using the username
+    const tokenResponse = await fetch(`https://codemover-backend-73adc6530796.herokuapp.com/getaccesstoken/${username}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    });
+
+    const tokenData = await tokenResponse.json();
+    console.log("Fetched Response in Quetionare: ", tokenData);
+    const accessToken = tokenData;
+    const repos = await getRepos(accessToken);
+    const fetchedRepos = repos.Repos;
+    const reposFormatted = fetchedRepos.map(repo => `${repo}\n`).join('');
     return reposFormatted;
 }();
+
+
 
 const Questions = async () => [
     "What's the Data Structure Utilized by the Solution?",
