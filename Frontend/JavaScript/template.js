@@ -50,12 +50,17 @@ ${answersReceived["Please Provide the Code for the Solution"]}
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
+<<<<<<< HEAD:JavaScript/template.js
                 // 'Access-Control-Allow-Origin': '*'
+=======
+                'Access-Control-Allow-Origin': '*'
+>>>>>>> 41e42269521004c5fa971df95ac1824c12ab7aea:Frontend/JavaScript/template.js
             }
         });
         
         ownerMail = await ownerMail.json();
         console.log("User Email: ", ownerMail);
+<<<<<<< HEAD:JavaScript/template.js
         const username = sessionStorage.getItem('User_Name');
         const tokenResponse = await fetch(`https://codemover-backend-73adc6530796.herokuapp.com/getaccesstoken/${username}`, {
             method: 'GET',
@@ -66,12 +71,18 @@ ${answersReceived["Please Provide the Code for the Solution"]}
         const tokenData = await tokenResponse.json();
         console.log("Access Token Fetched: ", tokenData);
         const accessToken = tokenData;
+=======
+>>>>>>> 41e42269521004c5fa971df95ac1824c12ab7aea:Frontend/JavaScript/template.js
 
     let req = {
         "commitMessage" : `Problem Difficulty Level : ${answersReceived["What's the Problem Difficulty Level?"]}`,
         "ownerMail" : ownerMail,
+<<<<<<< HEAD:JavaScript/template.js
         "content" : `${template}`,
         "Access_Token": accessToken
+=======
+        "content" : `${template}`
+>>>>>>> 41e42269521004c5fa971df95ac1824c12ab7aea:Frontend/JavaScript/template.js
     }
     console.log(`Repo name : ${repo} and Qn name : ${title}`)
 
@@ -79,7 +90,11 @@ ${answersReceived["Please Provide the Code for the Solution"]}
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
+<<<<<<< HEAD:JavaScript/template.js
                 // 'Access-Control-Allow-Origin': '*'
+=======
+                'Access-Control-Allow-Origin': '*'
+>>>>>>> 41e42269521004c5fa971df95ac1824c12ab7aea:Frontend/JavaScript/template.js
             },
             body: JSON.stringify(req)
         });
