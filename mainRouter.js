@@ -16,17 +16,16 @@ const otp = require("./Routers/otpRoute");
 const webTokenValidator = require('./Middleware/webTokenValidator');
 const rateLimitCheck = require('./Middleware/rateLimit');
 
-router.use("/", Get_Repo);
-router.use("/", Get_Access_Token);
 router.use("/", Login);
 router.use("/", Register);
-router.use("/",commit);
-router.use("/", rateLimitCheck, commit);
-router.use("/", Get_Contribution);
-router.use("/", Get_Streak);
-router.use("/", Get_Email);
-router.use("/", Update_Profile);
 router.use("/", otp);
+router.use("/", webTokenValidator, Get_Repo);
+router.use("/", webTokenValidator, Get_Access_Token);
+router.use("/", [webTokenValidator, rateLimitCheck], commit);
+router.use("/", webTokenValidator, Get_Contribution);
+router.use("/", webTokenValidator, Get_Streak);
+router.use("/", webTokenValidator, Get_Email);
+router.use("/", webTokenValidator, Update_Profile);
 
 
 module.exports = router;
