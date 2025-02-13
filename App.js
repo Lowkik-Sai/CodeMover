@@ -15,12 +15,14 @@ const corsOpts = {
 
   allowedHeaders: [
     'Content-Type',
+    'Authorization',
+    'X-Access-Token' 
   ],
 };
 
 app.use(cors(corsOpts));
 app.use(express.json());
-app.use(express.urlencoded({ extended: true })); // For parsing URL-encoded bodies
+app.use(express.urlencoded({ extended: true }));
 require('dotenv').config();
 app.use("/",mainRouter);
 
