@@ -95,14 +95,14 @@ const Register_Module = {
             const tokenData = await tokenResponse.json();
             const accessToken = tokenData.access_token;
             console.log("tokenData" ,tokenData,"\nAccess Token: ", accessToken);
-            const response = await axios.get('https://api.github.com/user', {
+            const githubResponse = await axios.get('https://api.github.com/user', {
                 headers: {
                     Authorization: `token ${accessToken}`
                 }
             });
 
-            const username = response.login;
-            const avatar_url = response.avatar_url;
+            const username = githubResponse.data.login;
+            const avatar_url = githubResponse.data.avatar_url;
 
             const token = jwt.sign({ 
                                     User_Name: username,
