@@ -21,7 +21,7 @@ let response = {
 };
 
 const Register_Module = {
-    setPassword : async(User_Name, Password, Access_Token, Email_ID) => {
+    setAccountCreds : async(User_Name, Password, Access_Token, Email_ID) => {
         try {
                 // Check if a User already exists with the given User_Name
                 const data = await ddb.getItem({
@@ -32,7 +32,6 @@ const Register_Module = {
                 }).promise();
         
                 if (data.Item && data.Item.User_Name.S === User_Name) {
-                    console.log(data.Item);
                     response.responseCode = 420;
                     response.responseBody = "Already Exists, Login Instead";
                     return response;
@@ -94,7 +93,6 @@ const Register_Module = {
 
             const tokenData = await tokenResponse.json();
             const accessToken = tokenData.access_token;
-            console.log("tokenData" ,tokenData,"\nAccess Token: ", accessToken);
             const githubResponse = await axios.get('https://api.github.com/user', {
                 headers: {
                     Authorization: `token ${accessToken}`
@@ -115,8 +113,6 @@ const Register_Module = {
             response.responseBody = "Successfully Authenticated with GitHub";
             response.signupToken = token;
             response.avatar_url = avatar_url; //In future, this can be used to display user's avatar in frontend
-            console.log("Response from register module: ", response);
-                        
         } catch (error) {
             response.responseCode = 400;
             response.responseBody = "Failed to Authenticate with GitHub";

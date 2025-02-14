@@ -12,13 +12,15 @@ const Register = require('./Routers/Register_Router');
 const commit = require('./Routers/Commit_Route');
 const otp = require("./Routers/otpRoute");
 
-//Middlewares
-const webTokenValidator = require('./Middleware/webTokenValidator');
-const rateLimitCheck = require('./Middleware/rateLimit');
 
 router.use("/", Login);
 router.use("/", Register);
 router.use("/", otp);
+
+//Middlewares
+const webTokenValidator = require('./Middleware/webTokenValidator');
+const rateLimitCheck = require('./Middleware/rateLimit');
+
 router.use("/", webTokenValidator, Get_Repo);
 router.use("/", webTokenValidator, Get_Access_Token);
 router.use("/", [webTokenValidator, rateLimitCheck], commit);
