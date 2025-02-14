@@ -22,72 +22,56 @@ let response = {
 
 const Register_Module = {
     setPassword : async(User_Name, Password, Access_Token, Email_ID) => {
-        // Check whether given github access token is valid
         try {
-            await axios.get('https://api.github.com/user', {
-                headers: {
-                    Authorization: `token ${Access_Token}`
+                // Check if a User already exists with the given User_Name
+                const data = await ddb.getItem({
+                    Key: {
+                        "User_Name": { "S": User_Name }
+                    },
+                    TableName: "Auth"
+                }).promise();
+        
+                if (data.Item && data.Item.User_Name.S === User_Name) {
+                    console.log(data.Item);
+                    response.responseCode = 420;
+                    response.responseBody = "Already Exists, Login Instead";
+                    return response;
                 }
-            });
-    
-        } catch (error) {
-            response.responseCode = 100;
-            response.responseBody = "Invalid Access Token";
-            console.log(error);
-            return response;
-        }
-    
-        // Check whether given Github User_Name is Valid
-        const Validate_User_response = await Validate_UserName(User_Name, Access_Token);
-        if(!Validate_User_response){
-            response.responseCode = 404;
-            response.responseBody = "Invalid Github User Name";
-            return response;
-        }
-    
-            // Check if a User already exists with the given User_Name
-            const data = await ddb.getItem({
-                Key: {
-                    "User_Name": { "S": User_Name }
-                },
-                TableName: "Auth"
+        
+        
+            // Insert User Details to DynamoDB
+            const hashedPassword = crypto.createHash('sha256').update(Password).digest('hex');
+        
+            var params = {
+                TableName: "Auth",
+                Item: {
+                    User_Name: { S: User_Name },
+                    Password: { S: hashedPassword },
+                    Access_Token: { S: Access_Token },
+                    Email: { S: Email_ID },
+                    Total_Contributions: { N: "0" },
+                    OTP: { S: "" }
+                }
+            };
+        
+            ddb.putItem(params, (err, data) => {
+                if(err){
+                    console.log(err);
+                    response.responseCode = 422;
+                    response.responseBody = "Failed to Add User to Database";
+                }
+                else{
+                    response.responseCode = 200;
+                    response.responseBody = "Successfully Added User to Database";
+                    return response;
+                }
             }).promise();
-    
-            if (data.Item && data.Item.User_Name.S === User_Name) {
-                console.log(data.Item);
-                response.responseCode = 420;
-                response.responseBody = "User already exists with the given User Name";
-                return response;
-            }
-    
-    
-        // Insert User Details to DynamoDB
-        const hashedPassword = crypto.createHash('sha256').update(Password).digest('hex');
-    
-        var params = {
-            TableName: "Auth",
-            Item: {
-                User_Name: { S: User_Name },
-                Password: { S: hashedPassword },
-                Access_Token: { S: Access_Token },
-                Email: { S: Email_ID },
-                Total_Contributions: { N: "0" },
-                OTP: { S: "" }
-            }
-        };
-    
-        ddb.putItem(params, (err, data) => {
-            if(err){
-                console.log(err);
-                response.responseCode = 422;
-                response.responseBody = "Failed to Add User to Database";
-            }
-            else{
-                response.responseCode = 200;
-                response.responseBody = "Successfully Added User to Database";
-                return response;
-            }
-        }).promise();
+            
+        } catch (error) {
+            response.responseCode = 500;
+            response.responseBody = "Internal Server Error";
+        }
+
         return response;
 
     },
@@ -113,7 +97,7 @@ const Register_Module = {
 
             const response = await axios.get('https://api.github.com/user', {
                 headers: {
-                    Authorization: `token ${Access_Token}`
+                    Authorization: `token ${accessToken}`
                 }
             });
 
@@ -122,7 +106,7 @@ const Register_Module = {
 
             const token = jwt.sign({ 
                                     User_Name: username,
-                                    Access_Token: accessToken,
+                                    Access_Token: accessToken
                                 }, "my-32-character-ultra-secure-and-ultra-long-secret", {
                                 expiresIn: '1h',
                             });
