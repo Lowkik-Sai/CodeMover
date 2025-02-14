@@ -5,22 +5,26 @@ const cors = require('cors');
 const app = express();
 const mainRouter = require('./mainRouter');
 
-const corsOpts = {
-  origin: ['https://codemover.me', `http://localhost:+${process.env.localHostPort}`],
+const allowedOrigins = [
+  'https://codemover.me',
+  'https://www.codemover.me',
+  `http://localhost:+${process.env.localHostPort}` // Include local development
+];
 
-  methods: [
-    'GET',
-    'POST',
-    'PUT',
-    'DELETE'
-  ],
-
-  allowedHeaders: [
-    'Content-Type',
-    'Authorization',
-    'X-Access-Token' 
-  ],
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('CORS not allowed for this origin'));
+    }
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Access-Token'],
+  credentials: true,
 };
+
+app.use(cors(corsOptions));
 
 app.use(cors(corsOpts));
 app.use(express.json());
@@ -33,7 +37,7 @@ app.use((req, res, next) => {
     next();
 });
 
-
+app.options('*', cors(corsOptions)); // Handles preflight requests
 app.use("/",mainRouter);
 
 app.get("/test", (req, res) => {
