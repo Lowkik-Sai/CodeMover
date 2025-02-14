@@ -6,7 +6,7 @@ const app = express();
 const mainRouter = require('./mainRouter');
 
 const corsOpts = {
-  origin: '*',
+  origin: ['https://codemover.me', `http://localhost:+${process.env.localHostPort}`],
 
   methods: [
     'GET',
@@ -26,12 +26,13 @@ app.use(cors(corsOpts));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use((req, res, next) => {
-    res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
-    res.set('Pragma', 'no-cache');
-    res.set('Expires', '0');
-    res.set('Surrogate-Control', 'no-store');
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0');
+    res.setHeader('Pragma', 'no-cache');
+    res.setHeader('Expires', '0');
+    res.setHeader('Surrogate-Control', 'no-store');
     next();
 });
+
 
 app.use("/",mainRouter);
 
