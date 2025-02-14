@@ -1,7 +1,7 @@
 const axios = require('axios');
 
-const Validate_User_Name = async (User_Name) => {
-    const access_token = process.env.gitToken;
+const Validate_User_Name = async (User_Name, access_token) => {
+
     try {
         const response = await axios.get(`https://api.github.com/users/${User_Name}`, {
             headers: {

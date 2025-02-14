@@ -1,10 +1,11 @@
+require('dotenv').config();
+
 const AWS = require('aws-sdk');
 const axios = require('axios');
 const crypto = require('crypto');
-require('dotenv').config();
+const jwt = require('jsonwebtoken');
 
 const Validate_UserName = require('../Middleware/Validate_UserName');
-const { setPassword, githubCallback } = require('../Controllers/Register_Controller');
 
 AWS.config.update({
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
@@ -37,7 +38,7 @@ const Register_Module = {
         }
     
         // Check whether given Github User_Name is Valid
-        const Validate_User_response = await Validate_UserName(User_Name);
+        const Validate_User_response = await Validate_UserName(User_Name, Access_Token);
         if(!Validate_User_response){
             response.responseCode = 404;
             response.responseBody = "Invalid Github User Name";
@@ -109,11 +110,27 @@ const Register_Module = {
 
             const tokenData = await tokenResponse.json();
             const accessToken = tokenData.access_token;
-            
-            console.log("tokenData : ", tokenData);
+
+            const response = await axios.get('https://api.github.com/user', {
+                headers: {
+                    Authorization: `token ${Access_Token}`
+                }
+            });
+
+            const username = response.login;
+            const avatar_url = response.avatar_url;
+
+            const token = jwt.sign({ 
+                                    User_Name: username,
+                                    Access_Token: accessToken,
+                                }, "my-32-character-ultra-secure-and-ultra-long-secret", {
+                                expiresIn: '1h',
+                            });
             
             response.responseCode = 202;
             response.responseBody = "Successfully Authenticated with GitHub";
+            response.signupToken = token;
+            response.avatar_url = avatar_url; //In future, this can be used to display user's avatar in frontend
 
             return response;
         } catch (error) {

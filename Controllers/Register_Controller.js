@@ -10,7 +10,7 @@ const Register_Controller = {
     githubCallback : async(req, res) => {
         const { code } = req.body;
         const Register_response = await Register_Module.githubCallback(code);
-        res.status(Register_response.responseCode).json({message: Register_response.responseBody});
+        res.status(Register_response.responseCode).json(Register_response);
     }
 }
 
