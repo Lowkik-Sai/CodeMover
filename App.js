@@ -8,8 +8,9 @@ const mainRouter = require('./mainRouter');
 const allowedOrigins = [
   'https://codemover.me',
   'https://www.codemover.me',
-  `http://localhost:+${process.env.localHostPort}` // Include local development
+  `http://localhost:${process.env.localHostPort || 5173}` // Include local development
 ];
+
 
 const corsOptions = {
   origin: function (origin, callback) {
