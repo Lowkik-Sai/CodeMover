@@ -18,6 +18,8 @@ var ddb = new AWS.DynamoDB({ apiVersion: "2012-08-10" });
 let response = {
     responseCode: 400,
     responseBody: "Bad Request",
+    signupToken : "",
+    avatar_url : ""
 };
 
 const Register_Module = {
@@ -115,7 +117,7 @@ const Register_Module = {
             response.responseBody = "Successfully Authenticated with GitHub";
             response.signupToken = token;
             response.avatar_url = avatar_url; //In future, this can be used to display user's avatar in frontend
-
+                        
         } catch (error) {
             response.responseCode = 400;
             response.responseBody = "Failed to Authenticate with GitHub";
