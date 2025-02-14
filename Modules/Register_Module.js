@@ -132,9 +132,11 @@ const Register_Module = {
             response.signupToken = token;
             response.avatar_url = avatar_url; //In future, this can be used to display user's avatar in frontend
 
-            return response;
         } catch (error) {
-            
+            response.responseCode = 400;
+            response.responseBody = "Failed to Authenticate with GitHub";
+            console.error('Error:', error);
+        }finally{
             return response;
         }
     }
