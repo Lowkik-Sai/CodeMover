@@ -5,8 +5,6 @@ const axios = require('axios');
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 
-const Validate_UserName = require('../Middleware/Validate_UserName');
-
 AWS.config.update({
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
@@ -96,7 +94,7 @@ const Register_Module = {
 
             const tokenData = await tokenResponse.json();
             const accessToken = tokenData.access_token;
-
+            console.log("tokenData" ,tokenData,"\nAccess Token: ", accessToken);
             const response = await axios.get('https://api.github.com/user', {
                 headers: {
                     Authorization: `token ${accessToken}`
@@ -117,6 +115,7 @@ const Register_Module = {
             response.responseBody = "Successfully Authenticated with GitHub";
             response.signupToken = token;
             response.avatar_url = avatar_url; //In future, this can be used to display user's avatar in frontend
+            console.log("Response from register module: ", response);
                         
         } catch (error) {
             response.responseCode = 400;
