@@ -128,13 +128,14 @@ const Register_Module = {
                     return response;
 
                 }
+            }else{
+                response.responseCode = 202;
+                response.responseBody = "Successfully Authenticated with GitHub";
+                response.signupToken = token;
+                response.avatar_url = avatar_url; //In future, this can be used to display user's avatar in frontend
+                return response;
             }
             
-            response.responseCode = 202;
-            response.responseBody = "Successfully Authenticated with GitHub";
-            response.signupToken = token;
-            response.avatar_url = avatar_url; //In future, this can be used to display user's avatar in frontend
-            return response;
         } catch (error) {
             response.responseCode = 400;
             response.responseBody = "Failed to Authenticate with GitHub";
