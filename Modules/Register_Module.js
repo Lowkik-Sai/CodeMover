@@ -121,11 +121,9 @@ const Register_Module = {
                     response.responseCode = 200;
                     response.JWT_TOKEN = token;
                     response.responseBody = "Successfully Logged In"; 
-                    return response;
                 }else{
                     response.responseCode = 404;
                     response.responseBody = "User not found, Register Instead";
-                    return response;
 
                 }
             }else if(type === "signup"){
@@ -133,13 +131,13 @@ const Register_Module = {
                 response.responseBody = "Successfully Authenticated with GitHub";
                 response.signupToken = token;
                 response.avatar_url = avatar_url; //In future, this can be used to display user's avatar in frontend
-                return response;
             }
             
         } catch (error) {
             response.responseCode = 400;
             response.responseBody = "Failed to Authenticate with GitHub";
             console.error('Error:', error);
+        } finally{
             return response;
         }
     }
