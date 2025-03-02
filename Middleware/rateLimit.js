@@ -15,7 +15,7 @@ async function rateLimitCheck(req,res,next){
               }
         })
         const {limit,used,remaining} = response.data.rate
-        console.log(limit,used,remaining)
+        console.log("Rate Limit: ",limit,"Used: ",used,"Remaining: ",remaining);
     }catch(error){
         console.log(error)
     }

@@ -55,7 +55,7 @@ const commitCodeModule = {
             };
 
             const updatedContributions = await ddb.updateItem(params).promise();
-            console.log("Updated total contributions:", updatedContributions);
+            console.log("Updated total contributions for ,", owner," :", updatedContributions);
             responseCode = 200;
             responseMessage = "Alright!";
         } catch (error) {

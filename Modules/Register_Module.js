@@ -17,7 +17,8 @@ let response = {
     responseCode: 400,
     responseBody: "Bad Request",
     signupToken : "",
-    avatar_url : ""
+    avatar_url : "",
+    JWT_TOKEN : ""
 };
 
 const Register_Module = {
@@ -108,7 +109,6 @@ const Register_Module = {
                                 }, "my-32-character-ultra-secure-and-ultra-long-secret", {
                                 expiresIn: '1h',
                             });
-            console.log("Mode of login :", type);
             if(type === "login"){
                 const data = await ddb.getItem({
                     Key: {
