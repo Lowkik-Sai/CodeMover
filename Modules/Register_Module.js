@@ -128,7 +128,7 @@ const Register_Module = {
                     return response;
 
                 }
-            }else{
+            }else if(type === "signup"){
                 response.responseCode = 202;
                 response.responseBody = "Successfully Authenticated with GitHub";
                 response.signupToken = token;
