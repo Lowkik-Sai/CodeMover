@@ -75,7 +75,7 @@ const Register_Module = {
 
     },
 
-    githubCallback : async(code) => {
+    githubCallback : async(code, type) => {
         try {
             // Exchange code for access token
             const tokenResponse = await fetch('https://github.com/login/oauth/access_token', {
@@ -101,13 +101,34 @@ const Register_Module = {
 
             const username = githubResponse.data.login;
             const avatar_url = githubResponse.data.avatar_url;
-
+            
             const token = jwt.sign({ 
                                     User_Name: username,
                                     Access_Token: accessToken
                                 }, "my-32-character-ultra-secure-and-ultra-long-secret", {
                                 expiresIn: '1h',
                             });
+
+            if(type === "login"){
+                const data = await ddb.getItem({
+                    Key: {
+                        "User_Name": { "S": username }
+                    },
+                    TableName: "Auth"
+                }).promise();
+        
+                if (data.Item && data.Item.User_Name.S === username) {
+                    response.responseCode = 200;
+                    response.JWT_TOKEN = token;
+                    response.responseBody = "Successfully Logged In"; 
+                    return response;
+                }else{
+                    response.responseCode = 404;
+                    response.responseBody = "User not found, Register Instead";
+                    return response;
+
+                }
+            }
             
             response.responseCode = 202;
             response.responseBody = "Successfully Authenticated with GitHub";
