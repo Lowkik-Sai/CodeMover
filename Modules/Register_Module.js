@@ -70,9 +70,9 @@ const Register_Module = {
         } catch (error) {
             response.responseCode = 500;
             response.responseBody = "Internal Server Error";
+            return response;
         }
 
-        return response;
 
     },
 
@@ -118,16 +118,19 @@ const Register_Module = {
                                     }, "my-32-character-ultra-secure-and-ultra-long-secret", {
                                     expiresIn: '1h',
                                 });
-                                
+
                 if (data.Item && data.Item.User_Name.S === username) {
                     response.responseCode = 200;
                     response.JWT_TOKEN = token;
+                    response.signupToken = "";
                     response.responseBody = "Successfully Logged In"; 
                 }else{
                     response.responseCode = 404;
                     response.responseBody = "User not found, Register Instead";
 
                 }
+
+                return response;
             }else if(type === "signup"){
                 const token = jwt.sign({ 
                                         User_Name: username,
@@ -139,13 +142,14 @@ const Register_Module = {
                 response.responseBody = "Successfully Authenticated with GitHub";
                 response.signupToken = token;
                 response.avatar_url = avatar_url; //In future, this can be used to display user's avatar in frontend
+                
+                return response;
             }
             
         } catch (error) {
             response.responseCode = 400;
             response.responseBody = "Failed to Authenticate with GitHub";
             console.error('Error:', error);
-        } finally{
             return response;
         }
     }
