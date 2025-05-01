@@ -8,7 +8,8 @@ const mainRouter = require('./mainRouter');
 const allowedOrigins = [
   'https://codemover.me',
   'https://www.codemover.me',
-  `http://localhost:${process.env.localHostPort || 5173}` // Include local development
+  `http://localhost:${process.env.localHostPort || 5173}`, // Include local development
+  'https://codemover-frontend-dae8bfb0132a.herokuapp.com'
 ];
 
 
