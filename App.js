@@ -5,13 +5,7 @@ const cors = require('cors');
 const app = express();
 const mainRouter = require('./mainRouter');
 
-const allowedOrigins = [
-  'https://codemover.me',
-  'https://www.codemover.me',
-  `http://localhost:${process.env.localHostPort || 5173}`, // Include local development
-  'https://codemover-frontend-dae8bfb0132a.herokuapp.com'
-];
-
+const allowedOrigins = JSON.parse(process.env.ALLOWED_ORIGINS || '[]');
 
 const corsOptions = {
   origin: function (origin, callback) {

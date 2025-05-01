@@ -3,3 +3,5 @@ node_modules
 .vscode
 testing.js
 sslKeys.txt
+DNS records.txt
+package-lock.json

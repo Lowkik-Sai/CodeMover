@@ -29,7 +29,7 @@ let userName = "";
   
 async function sendOTP(email,otp){
     console.log("Email :"+email)
-    mg.messages.create('codemover.me', {
+    mg.messages.create('codemover.tech', {
         from: "Excited User <mailgun@sandbox-123.mailgun.org>",
         to: email,
         subject: "OTP",
