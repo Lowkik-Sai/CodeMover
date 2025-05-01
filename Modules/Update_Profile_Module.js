@@ -10,43 +10,35 @@ AWS.config.update({
 
 const docClient = new AWS.DynamoDB.DocumentClient();
 
-let responseCode = 200;
-let responseBody = "";
-
 const Update_Profile = {
-    profile : async(User_Name, Email, Access_Token) => {
+    delete: async (User_Name) => {
         const params = {
             TableName: "Auth",
             Key: {
                 "User_Name": User_Name
-            },
-            UpdateExpression: "set Email = :x, Access_Token = :y",
-            ExpressionAttributeValues: {
-                ":x": Email,
-                ":y": Access_Token
-            }    
+            }
         };
-    
-        docClient.update(params, function(err, data) {
-            if(err){
-                responseCode = 100;
-                responseBody = "Error in Updating Profile";
-            }
-            else{
-                responseBody = "Successfully Updated Profile";
-            }
-        });
-    
-        const response = {
+
+        let responseCode = 200;
+        let responseBody = "";
+
+        try {
+            await docClient.delete(params).promise();
+            responseBody = "Successfully deleted user profile";
+        } catch (err) {
+            responseCode = 500;
+            responseBody = "Error in deleting profile: " + err.message;
+        }
+
+        return {
             responseCode,
             responseBody
         };
-    
-        return response;
     },
 
-    password : async(User_Name, Password) => {
+    update: async (User_Name, Password) => {
         const hashedPassword = crypto.createHash('sha256').update(Password).digest('hex');
+
         const params = {
             TableName: "Auth",
             Key: {
@@ -55,26 +47,25 @@ const Update_Profile = {
             UpdateExpression: "set Password = :x",
             ExpressionAttributeValues: {
                 ":x": hashedPassword
-            }    
+            }
         };
-    
-        docClient.update(params, function(err, data) {
-            if(err){
-                responseCode = 100;
-                responseBody = "Error in Updating Password";
-            }
-            else{
-                responseBody = "Successfully Updated Password";
-            }
-        });
-    
-        const response = {
+
+        let responseCode = 200;
+        let responseBody = "";
+
+        try {
+            await docClient.update(params).promise();
+            responseBody = "Successfully updated password";
+        } catch (err) {
+            responseCode = 500;
+            responseBody = "Error in updating password: " + err.message;
+        }
+
+        return {
             responseCode,
             responseBody
         };
-    
-        return response;
-    },
-}
+    }
+};
 
 module.exports = Update_Profile;

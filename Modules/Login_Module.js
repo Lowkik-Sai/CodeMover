@@ -35,7 +35,6 @@ const Login = async (User_Name, Password) => {
 
         const DB_Password = data.Item.Password.S;
         const hashedPassword = crypto.createHash('sha256').update(Password).digest('hex');
-        console.log(DB_Password, hashedPassword);
         let isValid = true;
         
         if(DB_Password !== hashedPassword) isValid = false;
@@ -46,7 +45,10 @@ const Login = async (User_Name, Password) => {
             return response;
         }
 
-        const token = jwt.sign({ User_Name: User_Name }, "my-32-character-ultra-secure-and-ultra-long-secret", {
+        const token = jwt.sign({ 
+            User_Name: User_Name,
+            Email: data.Item.Email.S,
+         }, "my-32-character-ultra-secure-and-ultra-long-secret", {
             expiresIn: '1h',
         });
         response.JWT_TOKEN = token;
