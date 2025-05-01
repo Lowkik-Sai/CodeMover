@@ -103,12 +103,7 @@ const Register_Module = {
             const username = githubResponse.data.login;
             const avatar_url = githubResponse.data.avatar_url;
             
-            const token = jwt.sign({ 
-                                    User_Name: username,
-                                    Access_Token: accessToken
-                                }, "my-32-character-ultra-secure-and-ultra-long-secret", {
-                                expiresIn: '1h',
-                            });
+            
             if(type === "login"){
                 const data = await ddb.getItem({
                     Key: {
@@ -116,7 +111,14 @@ const Register_Module = {
                     },
                     TableName: "Auth"
                 }).promise();
-        
+                
+                const token = jwt.sign({ 
+                                        User_Name: username,
+                                        Email: data.Item.Email.S,
+                                    }, "my-32-character-ultra-secure-and-ultra-long-secret", {
+                                    expiresIn: '1h',
+                                });
+                                
                 if (data.Item && data.Item.User_Name.S === username) {
                     response.responseCode = 200;
                     response.JWT_TOKEN = token;
@@ -127,6 +129,12 @@ const Register_Module = {
 
                 }
             }else if(type === "signup"){
+                const token = jwt.sign({ 
+                                        User_Name: username,
+                                        Access_Token: accessToken
+                                    }, "my-32-character-ultra-secure-and-ultra-long-secret", {
+                                    expiresIn: '1h',
+                                });
                 response.responseCode = 202;
                 response.responseBody = "Successfully Authenticated with GitHub";
                 response.signupToken = token;
