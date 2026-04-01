@@ -5,7 +5,7 @@ const cors = require('cors');
 const app = express();
 const mainRouter = require('./mainRouter');
 
-const allowedOrigins = JSON.parse(process.env.ALLOWED_ORIGINS || '[]');
+const allowedOrigins = JSON.parse(process.env.ALLOWED_ORIGINS || '["vercel.app"]');
 
 const corsOptions = {
   origin: function (origin, callback) {
