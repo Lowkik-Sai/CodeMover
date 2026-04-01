@@ -5,11 +5,15 @@ const cors = require('cors');
 const app = express();
 const mainRouter = require('./mainRouter');
 
-const allowedOrigins = JSON.parse(process.env.ALLOWED_ORIGINS || '["vercel.app"]');
+const allowedOrigins = JSON.parse(process.env.ALLOWED_ORIGINS || '[]');
 
 const corsOptions = {
   origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
+    if (
+      !origin ||
+      allowedOrigins.includes(origin) ||
+      origin.endsWith('.vercel.app')
+    ) {
       callback(null, true);
     } else {
       callback(new Error('CORS not allowed for this origin'));
@@ -21,6 +25,7 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -32,7 +37,6 @@ app.use((req, res, next) => {
     next();
 });
 
-app.options('*', cors(corsOptions)); // Handles preflight requests
 app.use("/",mainRouter);
 
 app.get("/test", (req, res) => {
